@@ -1,0 +1,7 @@
+FirstUserBundle_homepage:
+    pattern:  /
+    defaults: {  _controller: FirstUserBundle:Default:index  }
+
+FirstUserBundle_loginpage:
+    pattern:  /
+    defaults: {  _controller: FirstUserBundle:Default:login  }    
