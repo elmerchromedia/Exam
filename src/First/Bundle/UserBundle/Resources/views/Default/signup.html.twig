@@ -1,58 +1,20 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% block head %}
-            <link rel="stylesheet" href="style.css" />
-            <title>{% block title %}{% endblock %} - My Webpage</title>
-        {% endblock %}
-    </head>
-    <body>
-    <style type="text/css">
-    	body{font-family:arial, verdana, tahoma; background: #5D891A;}
-    	h1{font-family:tahoma; font-size:16px; font-weight:bold;}
-    	#main{width:100%; height:auto; min-height:100px; background:#ccc; border-radius: 6px;}
-    	#content{margin:10px; padding:0; display:block;}
-    	.title{color:#1546c1; text-align: center; padding: 20px 0;}
-        .field{width: 250px; height:25px; border-radius: 6px;}
-        #footer{text-align: center; padding:10px 0;}
-    </style>
-    	<div id="main">
-    		<div id="content">{% block content %}
-        	   <div class="title"><h1>User Sign Up<h1></div>
-            	<form action="" method="post">
-            		<table width="80%" height="100%" cellspacing="5" cellpadding="5">
-            			<tr>
-            				<td>Enter Your Name</td>
-            				<td><input type="text" name="Name" value="" placeholder="Enter Your Name Here" class="field"/></td>
-            			</tr>
-                        <tr>
-                            <td>Enter Your Last Name</td>
-                            <td><input type="text" name="Last_Name" value="" placeholder="Enter Your Last Name Here" class="field"/></td>
-                        </tr>
-                         <tr>
-                            <td>Enter Your Address</td>
-                            <td><input type="text" name="Address" value="" placeholder="Enter Your Address Here" class="field"/></td>
-                        </tr>
-                        <tr>
-                            <td>Enter Your Email Address <i>(to be used as Username)</i></td>
-                            <td><input type="text" name="Email_Address" value="" placeholder="Enter Your Email Here" class="field"/></td>
-                        </tr>
-                        <tr>
-                            <td>Enter Your Password</td>
-                            <td><input type="password" name="Password" value="" placeholder="Enter Your Password Here" class="field"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" align="center"><input type="submit" name="submit" value="Submit &raquo;" class="field"/></td>
-                        </tr>
-            		</table>
-            	</form>
-            {% endblock %}
-            </div>
-            <div id="footer">
-                {% block footer %}
-                    &copy; Copyright 2014 &bull; Created by <a href="javascript:;">Elmer P. Malinao</a>.
-                {% endblock %}
-            </div>
-    	</div>
-    </body>
-</html>
+{%extends "FirstUserBundle:Default:index.html.twig"%}
+{%block container %}
+<div class="container" >
+    <form id="form" class="well" method="POST" action="{{path('login_login_signup')}}" data-validate="parsley">
+         <h2>Sign Up</h2>
+        <label>Username</label>
+        <input type="text" id="username" name="email" class="input-xlarge" data-trigger="change" data-required="true" data-type="email">
+         <label>Repeat Username</label>
+        <input type="text" id="usernameRe" name="emailRe" class="input-xlarge" data-trigger="change" data-required="true" data-type="email" data-equalto="#username">
+        <label>First Name</label>
+        <input type="text" name="firstname" class="input-xlarge" data-trigger="change" data-required="true">
+        <label>Password</label>
+        <input type="password" name="password" class="input-xlarge" data-trigger="change" data-required="true">
+        <div>
+            <button class="btn btn-primary" type="submit" >Create Account</button>
+        </div>
+
+    </form>
+</div>
+ {%endblock%}

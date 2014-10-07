@@ -1,7 +1,11 @@
-FirstUserBundle_homepage:
-    pattern:  /
-    defaults: {  _controller: FirstUserBundle:Default:index  }
+login_login_homepage:
+    pattern:  /login
+    defaults: { _controller: FirstUserBundle:Default:index }
 
-FirstUserBundle_loginpage:
-    pattern:  /
-    defaults: {  _controller: FirstUserBundle:Default:login  }    
+login_login_signup:
+    pattern:  /signup
+    defaults: { _controller: FirstUserBundle:Default:signup }
+    
+login_login_logout:
+    pattern:  /logout
+    defaults: { _controller: FirstUserBundle:Default:logout }

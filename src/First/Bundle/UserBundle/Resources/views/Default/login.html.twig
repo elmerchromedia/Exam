@@ -1,46 +1,57 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% block head %}
-            <link rel="stylesheet" href="style.css" />
-            <title>{% block title %}{% endblock %} - My Webpage</title>
-        {% endblock %}
-    </head>
-    <body>
-    <style type="text/css">
-    	body{font-family:arial, verdana, tahoma; background: #5D891A;}
-    	h1{font-family:tahoma; font-size:16px; font-weight:bold;}
-    	#main{width:100%; height:auto; min-height:100px; background:#ccc; border-radius: 6px;}
-    	#content{margin:10px; padding:0; display:block;}
-    	.title{color:#1546c1; text-align: center; padding: 20px 0;}
-        .field{width: 250px; height:25px; border-radius: 6px;}
-        #footer{text-align: center; padding:10px 0;}
+{%extends "FirstUserBundle:Default:index.html.twig"%}
+{%block stylesheets %}
+<style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            max-width: 300px;
+            padding: 19px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+        .form-signin input[type="text"],
+        .form-signin input[type="password"] {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+        }
+
     </style>
-    	<div id="main">
-    		<div id="content">{% block content %}
-        	   <div class="title"><h1>Login System<h1></div>
-            	<form action="" method="post">
-            		<table width="80%" height="100%" cellspacing="5" cellpadding="5">
-                        <tr>
-                            <td>Enter Your Email Address <i>(to be used as Username)</i></td>
-                            <td><input type="text" name="Email_Address" value="" placeholder="Enter Your Email Here" class="field"/></td>
-                        </tr>
-                        <tr>
-                            <td>Enter Your Password</td>
-                            <td><input type="password" name="Password" value="" placeholder="Enter Your Password Here" class="field"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="6" align="center"><input type="submit" name="submit" value="Login &raquo;" class="field"/></td>
-                        </tr>
-            		</table>
-            	</form>
-            {% endblock %}
-            </div>
-            <div id="footer">
-                {% block footer %}
-                    &copy; Copyright 2014 &bull; Created by <a href="javascript:;">Elmer P. Malinao</a>.
-                {% endblock %}
-            </div>
-    	</div>
-    </body>
-</html>
+{%endblock%}
+   {%block container %}
+    <div class="container">
+
+        <form class="form-signin" method ="POST" action="{{path('login_login_homepage')}}" data-validate="parsley">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <input type="text" id="username" class="input-block-level" name="email" placeholder="Email address" data-trigger="change" data-required="true" data-type="email">
+            <input type="password" class="input-block-level" name="password" placeholder="Password" data-trigger="change" data-required="true">
+            <label class="checkbox">
+                <input type="checkbox" name="remember" value="remember-me"> Remember me
+            </label>
+            <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+            <a href="{{path('login_login_signup')}}" >Sign Up</a>
+        </form>
+
+    </div> 
+    {% if name is defined%}
+    <div class="alert-info fade in">
+        <strong>{{name}}</strong>
+    </div>
+    {%endif%}
+    {%endblock%}
