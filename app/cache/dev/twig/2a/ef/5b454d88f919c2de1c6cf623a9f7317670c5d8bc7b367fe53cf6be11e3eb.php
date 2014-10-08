@@ -7,99 +7,114 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
     {
         parent::__construct($env);
 
-        $this->parent = false;
+        $this->parent = $this->env->loadTemplate("FirstUserBundle:Default:index.html.twig");
 
         $this->blocks = array(
-            'head' => array($this, 'block_head'),
-            'title' => array($this, 'block_title'),
-            'content' => array($this, 'block_content'),
-            'footer' => array($this, 'block_footer'),
+            'stylesheets' => array($this, 'block_stylesheets'),
+            'container' => array($this, 'block_container'),
         );
+    }
+
+    protected function doGetParent(array $context)
+    {
+        return "FirstUserBundle:Default:index.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        // line 1
-        echo "<!DOCTYPE html>
-<html>
-    <head>
-        ";
-        // line 4
-        $this->displayBlock('head', $context, $blocks);
-        // line 8
-        echo "    </head>
-    <body>
-    <style type=\"text/css\">
-    \tbody{font-family:arial, verdana, tahoma; background: #5D891A;}
-    \th1{font-family:tahoma; font-size:16px; font-weight:bold;}
-    \t#main{width:100%; height:auto; min-height:100px; background:#ccc; border-radius: 6px;}
-    \t#content{margin:10px; padding:0; display:block;}
-    \t.title{color:#1546c1; text-align: center; padding: 20px 0;}
-        .field{width: 250px; height:25px; border-radius: 6px;}
-        #footer{text-align: center; padding:10px 0;}
+        $this->parent->display($context, array_merge($this->blocks, $blocks));
+    }
+
+    // line 2
+    public function block_stylesheets($context, array $blocks = array())
+    {
+        // line 3
+        echo "<style type=\"text/css\">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #5d891a;
+        }
+
+        .form-signin {
+            max-width: 300px;
+            padding: 19px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+        .form-signin input[type=\"text\"],
+        .form-signin input[type=\"password\"] {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+        }
+
     </style>
-    \t<div id=\"main\">
-    \t\t<div id=\"content\">";
-        // line 20
-        $this->displayBlock('content', $context, $blocks);
+";
+    }
+
+    // line 37
+    public function block_container($context, array $blocks = array())
+    {
         // line 38
-        echo "            </div>
-            <div id=\"footer\">
-                ";
+        echo "    <div class=\"container\">
+
+        <form class=\"form-signin\" method =\"POST\" action=\"";
         // line 40
-        $this->displayBlock('footer', $context, $blocks);
-        // line 43
-        echo "            </div>
-    \t</div>
-    </body>
-</html>";
-    }
+        echo $this->env->getExtension('routing')->getPath("login_login_homepage");
+        echo "\" data-validate=\"parsley\">
+        <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
+            <tr> 
+                <td><h2 class=\"form-signin-heading\">Sign In</h2></td>
+            </tr>
+            <tr> 
+                <td><input type=\"text\" id=\"username\" class=\"input-block-level\" name=\"email\" placeholder=\"Please enter a email address\" data-trigger=\"change\" data-required=\"true\" data-type=\"email\"></td>
+            </tr>
+            <tr> 
+                <td><input type=\"password\" class=\"input-block-level\" name=\"password\" placeholder=\"Please enter your password\" data-trigger=\"change\" data-required=\"true\"></td>
+            </tr>
+            <tr> 
+                <td><label class=\"checkbox\">
+                <input type=\"checkbox\" name=\"remember\" value=\"remember-me\"> Remember Me
+            </label></td>
+            </tr>
+            <tr> 
+                <td><button class=\"btn btn-large btn-primary\" type=\"submit\">Sign in</button>
+            <a href=\"";
+        // line 58
+        echo $this->env->getExtension('routing')->getPath("login_login_signup");
+        echo "\" >Sign Up</a> | <a href=\"javascript:;\" >Forgot Password</a></td>
+            </tr>
+            </table>
+        </form>
 
-    // line 4
-    public function block_head($context, array $blocks = array())
-    {
-        // line 5
-        echo "            <link rel=\"stylesheet\" href=\"style.css\" />
-            <title>";
-        // line 6
-        $this->displayBlock('title', $context, $blocks);
-        echo " - My Webpage</title>
-        ";
-    }
-
-    public function block_title($context, array $blocks = array())
-    {
-    }
-
-    // line 20
-    public function block_content($context, array $blocks = array())
-    {
-        // line 21
-        echo "        \t   <div class=\"title\"><h1>Login System<h1></div>
-            \t<form action=\"\" method=\"post\">
-            \t\t<table width=\"80%\" height=\"100%\" cellspacing=\"5\" cellpadding=\"5\">
-                        <tr>
-                            <td>Enter Your Email Address <i>(to be used as Username)</i></td>
-                            <td><input type=\"text\" name=\"Email_Address\" value=\"\" placeholder=\"Enter Your Email Here\" class=\"field\"/></td>
-                        </tr>
-                        <tr>
-                            <td>Enter Your Password</td>
-                            <td><input type=\"password\" name=\"Password\" value=\"\" placeholder=\"Enter Your Password Here\" class=\"field\"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan=\"6\" align=\"center\"><input type=\"submit\" name=\"submit\" value=\"Login &raquo;\" class=\"field\"/></td>
-                        </tr>
-            \t\t</table>
-            \t</form>
-            ";
-    }
-
-    // line 40
-    public function block_footer($context, array $blocks = array())
-    {
-        // line 41
-        echo "                    &copy; Copyright 2014 &bull; Created by <a href=\"javascript:;\">Elmer P. Malinao</a>.
-                ";
+    </div> 
+    ";
+        // line 64
+        if (array_key_exists("name", $context)) {
+            // line 65
+            echo "    <div class=\"alert-info fade in\">
+        <strong>";
+            // line 66
+            echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
+            echo "</strong>
+    </div>
+    ";
+        }
+        // line 69
+        echo "    ";
     }
 
     public function getTemplateName()
@@ -107,8 +122,13 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
         return "FirstUserBundle:Default:login.html.twig";
     }
 
+    public function isTraitable()
+    {
+        return false;
+    }
+
     public function getDebugInfo()
     {
-        return array (  101 => 41,  98 => 40,  78 => 21,  75 => 20,  65 => 6,  62 => 5,  59 => 4,  52 => 43,  50 => 40,  46 => 38,  44 => 20,  30 => 8,  28 => 4,  23 => 1,);
+        return array (  117 => 69,  111 => 66,  108 => 65,  106 => 64,  97 => 58,  76 => 40,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
     }
 }

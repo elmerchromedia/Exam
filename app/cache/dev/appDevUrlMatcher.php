@@ -122,22 +122,19 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // FirstUserBundle_homepage
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'FirstUserBundle_homepage');
-            }
-
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::indexAction',  '_route' => 'FirstUserBundle_homepage',);
+        // login_login_homepage
+        if ($pathinfo === '/login') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::indexAction',  '_route' => 'login_login_homepage',);
         }
 
-        // FirstUserBundle_loginpage
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'FirstUserBundle_loginpage');
-            }
+        // login_login_signup
+        if ($pathinfo === '/signup') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::signupAction',  '_route' => 'login_login_signup',);
+        }
 
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::loginAction',  '_route' => 'FirstUserBundle_loginpage',);
+        // login_login_logout
+        if ($pathinfo === '/logout') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::logoutAction',  '_route' => 'login_login_logout',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

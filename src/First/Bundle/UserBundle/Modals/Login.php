@@ -1,4 +1,5 @@
 <?php
+
 namespace First\Bundle\UserBundle\Modals;
 /*
  * To change this template, choose Tools | Templates
@@ -8,7 +9,7 @@ namespace First\Bundle\UserBundle\Modals;
 /**
  * Description of Login
  *
- * @author Elmer Malinao
+ * 
  */
 class Login {
     private $username;

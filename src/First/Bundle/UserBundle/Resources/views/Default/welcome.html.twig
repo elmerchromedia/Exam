@@ -1,11 +1,26 @@
 {%extends "FirstUserBundle:Default:index.html.twig"%}
 {%block stylesheets %}
-
+<style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #5d891a;
+        }
+        a{font-family:arial; color:#fff;}
+        a:hover{text-decoration:underline; color:#000;}
+        h2{color:#ffd800;}
+</style>
 {%endblock%}
    {%block container %}
 <div class="container">
-    <h2>Hello {{name}}</h2>
- {% include "FirstUserBundle:Default:table.html.twig"%}
+    <h2>Welcome {{name}} dashboard!..</h2>
 </div> 
-<a href="{{path('login_login_logout')}}" >Logout</a>
+<div style="text-align:center;"><a href="{{path('login_login_logout')}}" >Logout</a></div>
+
+ <table width="100%" cellpadding="5" cellspacing="5">
+            <tr> 
+                <td colspan="8" style="text-align:center;">
+                <button class="btn btn-primary" type="submit" >Update Account</button></td>
+            </tr>
+        </table>
     {%endblock%}

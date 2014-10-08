@@ -11,7 +11,7 @@ class DefaultController extends Controller {
 
     public function indexAction(Request $request) {
         $session = $this->getRequest()->getSession();
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('FirstUserBundle:Users');
         if ($request->getMethod() == 'POST') {
             $session->clear();
@@ -26,9 +26,9 @@ class DefaultController extends Controller {
                     $login->setPassword($password);
                     $session->set('login', $login);
                 }
-                return $this->render('LoginLoginBundle:Default:welcome.html.twig', array('name' => $user->getFirstName()));
+                return $this->render('FirstUserBundle:Default:welcome.html.twig', array('name' => $user->getFirstName()));
             } else {
-                return $this->render('LoginLoginBundle:Default:login.html.twig', array('name' => 'Login Error'));
+                return $this->render('FirstUserBundle:Default:login.html.twig', array('name' => 'Login Error'));
             }
         } else {
             if ($session->has('login')) {
@@ -58,7 +58,7 @@ class DefaultController extends Controller {
                     if($page>1){
                         $offset = $count_per_page * ($page-1);
                     }
-                     $em = $this->getDoctrine()->getEntityManager();
+                     $em = $this->getDoctrine()->getManager();
                     $ctryQuery = $em->createQueryBuilder()
                             ->select('c')
                             ->from('FirstUserBundle:Country', 'c')
@@ -75,7 +75,7 @@ class DefaultController extends Controller {
     }
 
     public function getTotalCountries() {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $countQuery = $em->createQueryBuilder()
                 ->select('Count(c)')
                 ->from('FirstUserBundle:Country', 'c');
@@ -88,13 +88,15 @@ class DefaultController extends Controller {
         if ($request->getMethod() == 'POST') {
             $username = $request->get('email');
             $firstname = $request->get('firstname');
+            $lastname = $request->get('lastname');
             $password = $request->get('password');
 
             $user = new Users();
             $user->setFirstName($firstname);
+            $user->setLastName($lastname);
             $user->setPassword(sha1($password));
-            $user->setemail($username);
-            $em = $this->getDoctrine()->getEntityManager();
+            $user->setUsername($username);
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
         }

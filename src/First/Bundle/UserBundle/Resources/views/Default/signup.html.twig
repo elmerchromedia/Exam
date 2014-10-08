@@ -1,20 +1,46 @@
 {%extends "FirstUserBundle:Default:index.html.twig"%}
 {%block container %}
+<style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #5d891a;
+        }
+</style>
 <div class="container" >
     <form id="form" class="well" method="POST" action="{{path('login_login_signup')}}" data-validate="parsley">
-         <h2>Sign Up</h2>
-        <label>Username</label>
-        <input type="text" id="username" name="email" class="input-xlarge" data-trigger="change" data-required="true" data-type="email">
-         <label>Repeat Username</label>
-        <input type="text" id="usernameRe" name="emailRe" class="input-xlarge" data-trigger="change" data-required="true" data-type="email" data-equalto="#username">
-        <label>First Name</label>
-        <input type="text" name="firstname" class="input-xlarge" data-trigger="change" data-required="true">
-        <label>Password</label>
-        <input type="password" name="password" class="input-xlarge" data-trigger="change" data-required="true">
-        <div>
-            <button class="btn btn-primary" type="submit" >Create Account</button>
-        </div>
-
+         <table width="100%" cellpadding="5" cellspacing="5">
+            <tr> 
+                <td align="center" colspan="6"><h2>Sign Up Your Account Now!..</h2></td>
+            </tr>
+            <tr> 
+                <td><label>Email Address</label></td>
+                <td><input type="text" name="email" class="input-xlarge" data-trigger="change" data-required="true" data-type="email" placeholder="Please enter your email address" /></td>
+            </tr>
+            <tr> 
+                <td><label>First Name</label></td>
+                <td><input type="text" name="firstname" class="input-xlarge" data-trigger="change" data-required="true" placeholder="Please enter your first name" /></td>
+            </tr>
+            <tr> 
+                <td><label>Last Name</label></td>
+                <td><input type="text" name="lastname" class="input-xlarge" data-trigger="change" data-required="true" placeholder="Please enter your last name" /></td>
+            </tr>
+            <tr> 
+                <td><label>Password</label></td>
+                <td><input type="password" id="password" name="password" class="input-xlarge" data-trigger="change" data-required="true" placeholder="Please enter your desired password" />
+                </td>
+            </tr>
+            <tr> 
+                <td><label>Confirm Password</label></td>
+                <td>
+                <input type="password" id="passwordRe" name="passwordRe" class="input-xlarge" data-trigger="change" data-required="true" data-equalto="#password" placeholder="Please enter again your desired password" />
+                </td>
+            </tr>
+            <tr> 
+                <td colspan="8" style="text-align:center;">
+                <button class="btn btn-primary" type="submit" >Create Account</button></td>
+            </tr>
+        </table>
     </form>
 </div>
  {%endblock%}
