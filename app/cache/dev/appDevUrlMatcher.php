@@ -122,9 +122,18 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // _welcome
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', '_welcome');
+            }
+
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::indexAction',  '_route' => '_welcome',);
+        }
+
         // login_login_homepage
-        if ($pathinfo === '/login') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::indexAction',  '_route' => 'login_login_homepage',);
+        if ($pathinfo === '/dashboard') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::welcomeAction',  '_route' => 'login_login_homepage',);
         }
 
         // login_login_signup
@@ -135,6 +144,16 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         // login_login_logout
         if ($pathinfo === '/logout') {
             return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::logoutAction',  '_route' => 'login_login_logout',);
+        }
+
+        // login_login_editaccount
+        if ($pathinfo === '/editaccount') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::editaccountAction',  '_route' => 'login_login_editaccount',);
+        }
+
+        // login_login_success
+        if ($pathinfo === '/success') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::successAction',  '_route' => 'login_login_success',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

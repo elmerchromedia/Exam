@@ -1,0 +1,20 @@
+{%extends "FirstUserBundle:Default:index.html.twig"%}
+{%block container %}
+<style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #5d891a;
+        }
+</style>
+<div class="container" >
+    <form id="form" class="well" method="POST" action="{{path('login_login_signup')}}" data-validate="parsley">
+         <table width="100%" cellpadding="5" cellspacing="5">
+            <tr> 
+                <td align="center" colspan="6"><h2>Edit {{name}} Account</h2></td>
+            </tr>
+           <tr><td>{{ profiles }}</td></tr>
+        </table>
+    </form>
+</div>
+ {%endblock%}

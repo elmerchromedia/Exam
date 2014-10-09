@@ -37,32 +37,38 @@ class __TwigTemplate_012fe590842e43aa273607eae27e1885b3ae2a09639fcb84bcd1b4341ef
         }
         a{font-family:arial; color:#fff;}
         a:hover{text-decoration:underline; color:#000;}
-        h2{color:#ffd800;}
+        h2{color:#fff; font-family:tahoma; font-style:italic; font-size:22px;}
+        h2 span{color:#ffb802; font-family:tahoma; font-style:italic; font-size:22px;}
 </style>
 ";
     }
 
-    // line 14
+    // line 15
     public function block_container($context, array $blocks = array())
     {
-        // line 15
-        echo "<div class=\"container\">
-    <h2>Welcome ";
         // line 16
+        echo "<div class=\"container\">
+    <h2>Welcome back, <span>";
+        // line 17
         echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
-        echo " dashboard!..</h2>
+        echo " ";
+        echo twig_escape_filter($this->env, (isset($context["userid"]) ? $context["userid"] : $this->getContext($context, "userid")), "html", null, true);
+        echo "  </span></h2>
 </div> 
-<div style=\"text-align:center;\"><a href=\"";
-        // line 18
-        echo $this->env->getExtension('routing')->getPath("login_login_logout");
-        echo "\" >Logout</a></div>
 
- <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
+    <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
             <tr> 
                 <td colspan=\"8\" style=\"text-align:center;\">
-                <button class=\"btn btn-primary\" type=\"submit\" >Update Account</button></td>
+                <a href=\"";
+        // line 23
+        echo $this->env->getExtension('routing')->getPath("login_login_editaccount");
+        echo "\" >Edit Account</a> | <a href=\"#\" >Change Password</a> | <a href=\"";
+        echo $this->env->getExtension('routing')->getPath("login_login_logout");
+        echo "\" >Logout</a></td>
+
             </tr>
-        </table>
+    </table>
+
     ";
     }
 
@@ -78,6 +84,6 @@ class __TwigTemplate_012fe590842e43aa273607eae27e1885b3ae2a09639fcb84bcd1b4341ef
 
     public function getDebugInfo()
     {
-        return array (  57 => 18,  52 => 16,  49 => 15,  46 => 14,  32 => 3,  29 => 2,);
+        return array (  64 => 23,  53 => 17,  50 => 16,  47 => 15,  32 => 3,  29 => 2,);
     }
 }

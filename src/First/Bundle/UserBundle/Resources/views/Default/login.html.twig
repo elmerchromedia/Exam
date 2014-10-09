@@ -36,7 +36,6 @@
 {%endblock%}
    {%block container %}
     <div class="container">
-
         <form class="form-signin" method ="POST" action="{{path('login_login_homepage')}}" data-validate="parsley">
         <table width="100%" cellpadding="5" cellspacing="5">
             <tr> 
@@ -48,11 +47,11 @@
             <tr> 
                 <td><input type="password" class="input-block-level" name="password" placeholder="Please enter your password" data-trigger="change" data-required="true"></td>
             </tr>
-            <tr> 
+            <!--tr> 
                 <td><label class="checkbox">
                 <input type="checkbox" name="remember" value="remember-me"> Remember Me
             </label></td>
-            </tr>
+            </tr-->
             <tr> 
                 <td><button class="btn btn-large btn-primary" type="submit">Sign in</button>
             <a href="{{path('login_login_signup')}}" >Sign Up</a> | <a href="javascript:;" >Forgot Password</a></td>

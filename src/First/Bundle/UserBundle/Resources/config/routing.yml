@@ -1,6 +1,10 @@
-login_login_homepage:
-    pattern:  /login
+_welcome:
+    path:     /
     defaults: { _controller: FirstUserBundle:Default:index }
+
+login_login_homepage:
+    pattern:  /dashboard
+    defaults: { _controller: FirstUserBundle:Default:welcome }
 
 login_login_signup:
     pattern:  /signup
@@ -9,3 +13,11 @@ login_login_signup:
 login_login_logout:
     pattern:  /logout
     defaults: { _controller: FirstUserBundle:Default:logout }
+
+login_login_editaccount:
+    pattern:  /editaccount
+    defaults: { _controller: FirstUserBundle:Default:editaccount }
+
+login_login_success:
+    pattern:  /success
+    defaults: { _controller: FirstUserBundle:Default:success }    

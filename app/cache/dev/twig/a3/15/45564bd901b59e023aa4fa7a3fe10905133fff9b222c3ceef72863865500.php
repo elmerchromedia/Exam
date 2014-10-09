@@ -23,7 +23,7 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
 <html lang=\"en\">
     <head>
         <meta charset=\"utf-8\">
-        <title>Sign in &middot; Project</title>
+        <title>Elmer First Symfony2 and Twig Project</title>
         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
         <meta name=\"description\" content=\"\">
         <meta name=\"author\" content=\"\">
@@ -47,37 +47,36 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
         echo "        </head>
 
         <body>
-
 ";
-        // line 19
+        // line 18
         $this->displayBlock('container', $context, $blocks);
-        // line 21
+        // line 20
         echo "
 
             <script src=\"";
-        // line 23
+        // line 22
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/jquery.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 24
+        // line 23
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/bootstrap.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 25
+        // line 24
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/parsley/parsley.min.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 26
+        // line 25
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/parsley/parsley-standalone.min.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 27
+        // line 26
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/parsley/parsley.extend.min.js"), "html", null, true);
         echo "\"></script>
 ";
-        // line 28
+        // line 27
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 30
+        // line 29
         echo "        </body>
     </html>
 
@@ -89,15 +88,15 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
     {
     }
 
-    // line 19
+    // line 18
     public function block_container($context, array $blocks = array())
     {
     }
 
-    // line 28
+    // line 27
     public function block_javascripts($context, array $blocks = array())
     {
-        // line 29
+        // line 28
         echo " ";
     }
 
@@ -113,6 +112,6 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
 
     public function getDebugInfo()
     {
-        return array (  101 => 29,  98 => 28,  93 => 19,  88 => 13,  81 => 30,  79 => 28,  75 => 27,  71 => 26,  67 => 25,  63 => 24,  59 => 23,  55 => 21,  53 => 19,  47 => 15,  45 => 13,  41 => 12,  37 => 11,  33 => 10,  22 => 1,  34 => 4,  31 => 3,  28 => 2,);
+        return array (  100 => 28,  97 => 27,  92 => 18,  87 => 13,  80 => 29,  78 => 27,  74 => 26,  70 => 25,  66 => 24,  62 => 23,  58 => 22,  54 => 20,  52 => 18,  47 => 15,  45 => 13,  41 => 12,  37 => 11,  33 => 10,  22 => 1,);
     }
 }

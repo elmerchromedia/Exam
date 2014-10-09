@@ -1,0 +1,8 @@
+success:
+  profile_updated: Your Profile has been successfully updated.
+ 
+info:
+  weekly_reminder: You weekly task is still pending. Please complete it.
+ 
+error:
+  location_not_found: We are unable to find your location. 

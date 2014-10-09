@@ -8,19 +8,21 @@
         }
         a{font-family:arial; color:#fff;}
         a:hover{text-decoration:underline; color:#000;}
-        h2{color:#ffd800;}
+        h2{color:#fff; font-family:tahoma; font-style:italic; font-size:22px;}
+        h2 span{color:#ffb802; font-family:tahoma; font-style:italic; font-size:22px;}
 </style>
 {%endblock%}
    {%block container %}
 <div class="container">
-    <h2>Welcome {{name}} dashboard!..</h2>
+    <h2>Welcome back, <span>{{name}} {{userid}}  </span></h2>
 </div> 
-<div style="text-align:center;"><a href="{{path('login_login_logout')}}" >Logout</a></div>
 
- <table width="100%" cellpadding="5" cellspacing="5">
+    <table width="100%" cellpadding="5" cellspacing="5">
             <tr> 
                 <td colspan="8" style="text-align:center;">
-                <button class="btn btn-primary" type="submit" >Update Account</button></td>
+                <a href="{{path('login_login_editaccount')}}" >Edit Account</a> | <a href="#" >Change Password</a> | <a href="{{path('login_login_logout')}}" >Logout</a></td>
+
             </tr>
-        </table>
+    </table>
+
     {%endblock%}

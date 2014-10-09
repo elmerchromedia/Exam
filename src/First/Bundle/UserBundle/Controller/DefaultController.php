@@ -4,31 +4,36 @@ namespace First\Bundle\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use First\Bundle\UserBundle\Entity\Users;
 use First\Bundle\UserBundle\Modals\Login;
+use Symfony\Component\HttpFoundation\Session\Session; 
 
 class DefaultController extends Controller {
 
     public function indexAction(Request $request) {
+            return $this->render('FirstUserBundle:Default:login.html.twig');
+    }
+
+    public function welcomeAction(Request $request) {
         $session = $this->getRequest()->getSession();
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('FirstUserBundle:Users');
         if ($request->getMethod() == 'POST') {
             $session->clear();
+            $id = $request->get('userid');
             $username = $request->get('email');
             $password = sha1($request->get('password'));
-            $remember = $request->get('remember');
+
             $user = $repository->findOneBy(array('email' => $username, 'password' => $password));
-            if ($user) {
-                if ($remember == 'remember-me') {
-                    $login = new Login();
-                    $login->setUsername($username);
-                    $login->setPassword($password);
-                    $session->set('login', $login);
-                }
-                return $this->render('FirstUserBundle:Default:welcome.html.twig', array('name' => $user->getFirstName()));
-            } else {
-                return $this->render('FirstUserBundle:Default:login.html.twig', array('name' => 'Login Error'));
+
+            if (!$user) {
+                 //return $this->render('FirstUserBundle:Default:index.html.twig', array('name' => 'Login Error'));
+                return $this->redirect($this->generateUrl('login'));
+            }else{
+                $session->set('userid' , $user->getUserId());
+                return $this->render('FirstUserBundle:Default:welcome.html.twig', array('userid' => $user->getUserid(), 'name' => $user->getFirstName()));
             }
         } else {
             if ($session->has('login')) {
@@ -36,52 +41,9 @@ class DefaultController extends Controller {
                 $username = $login->getUsername();
                 $password = $login->getPassword();
                 $user = $repository->findOneBy(array('email' => $username, 'password' => $password));
-                if ($user) {
-                    $page = $request->get('page');
-                    $count_per_page = 50;
-                    $total_count = $this->getTotalCountries();
-                    $total_pages=ceil($total_count/$count_per_page);
-
-                    if(!is_numeric($page)){
-                        $page=1;
-                    }
-                    else{
-                        $page=floor($page);
-                    }
-                    if($total_count<=$count_per_page){
-                        $page=1;
-                    }
-                    if(($page*$count_per_page)>$total_count){
-                        $page=$total_pages;
-                    }
-                    $offset=0;
-                    if($page>1){
-                        $offset = $count_per_page * ($page-1);
-                    }
-                     $em = $this->getDoctrine()->getManager();
-                    $ctryQuery = $em->createQueryBuilder()
-                            ->select('c')
-                            ->from('FirstUserBundle:Country', 'c')
-                            ->setFirstResult($offset)
-                            ->setMaxResults($count_per_page);
-                    $ctryFinalQuery = $ctryQuery->getQuery();
-
-                    $countries = $ctryFinalQuery->getArrayResult();
-                    return $this->render('FirstUserBundle:Default:welcome.html.twig', array('name' => $user->getFirstName(),'countries'=>$countries,'total_pages'=>$total_pages,'current_page'=> $page));
-                }
             }
             return $this->render('FirstUserBundle:Default:login.html.twig');
         }
-    }
-
-    public function getTotalCountries() {
-        $em = $this->getDoctrine()->getManager();
-        $countQuery = $em->createQueryBuilder()
-                ->select('Count(c)')
-                ->from('FirstUserBundle:Country', 'c');
-        $finalQuery = $countQuery->getQuery();
-        $total = $finalQuery->getSingleScalarResult();
-        return $total;
     }
 
     public function signupAction(Request $request) {
@@ -99,10 +61,39 @@ class DefaultController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            return $this->redirect('login');
         }
         return $this->render('FirstUserBundle:Default:signup.html.twig');
     }
 
+    public function editaccountAction(Request $request) {
+       $session = new Session();
+       $session->start();
+
+       $id = $session->get('userid');
+
+       $user = new Users();
+       $em = $this->getDoctrine()->getManager();
+
+       $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+       var_dump($user); exit;
+
+       if (!$user) {
+           throw $this->createNotFoundException(
+               'No user found for id '.$id
+           );
+       }else{
+
+           $user->setUsername($user->getUserName());
+           $user->setFirstName($user->getFirstName());
+           $user->setLastName($user->getLastName());
+           $em->flush();
+
+            return $this->redirect('editaccount');
+
+      }
+}
     public function logoutAction(Request $request) {
         $session = $this->getRequest()->getSession();
         $session->clear();

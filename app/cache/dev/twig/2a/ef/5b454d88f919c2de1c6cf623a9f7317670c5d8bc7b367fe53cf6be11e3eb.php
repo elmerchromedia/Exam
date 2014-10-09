@@ -70,9 +70,8 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
     {
         // line 38
         echo "    <div class=\"container\">
-
         <form class=\"form-signin\" method =\"POST\" action=\"";
-        // line 40
+        // line 39
         echo $this->env->getExtension('routing')->getPath("login_login_homepage");
         echo "\" data-validate=\"parsley\">
         <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
@@ -85,15 +84,15 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
             <tr> 
                 <td><input type=\"password\" class=\"input-block-level\" name=\"password\" placeholder=\"Please enter your password\" data-trigger=\"change\" data-required=\"true\"></td>
             </tr>
-            <tr> 
+            <!--tr> 
                 <td><label class=\"checkbox\">
                 <input type=\"checkbox\" name=\"remember\" value=\"remember-me\"> Remember Me
             </label></td>
-            </tr>
+            </tr-->
             <tr> 
                 <td><button class=\"btn btn-large btn-primary\" type=\"submit\">Sign in</button>
             <a href=\"";
-        // line 58
+        // line 57
         echo $this->env->getExtension('routing')->getPath("login_login_signup");
         echo "\" >Sign Up</a> | <a href=\"javascript:;\" >Forgot Password</a></td>
             </tr>
@@ -102,18 +101,18 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
 
     </div> 
     ";
-        // line 64
+        // line 63
         if (array_key_exists("name", $context)) {
-            // line 65
+            // line 64
             echo "    <div class=\"alert-info fade in\">
         <strong>";
-            // line 66
+            // line 65
             echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
             echo "</strong>
     </div>
     ";
         }
-        // line 69
+        // line 68
         echo "    ";
     }
 
@@ -129,6 +128,6 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
 
     public function getDebugInfo()
     {
-        return array (  117 => 69,  111 => 66,  108 => 65,  106 => 64,  97 => 58,  76 => 40,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
+        return array (  116 => 68,  110 => 65,  107 => 64,  105 => 63,  96 => 57,  75 => 39,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
     }
 }
