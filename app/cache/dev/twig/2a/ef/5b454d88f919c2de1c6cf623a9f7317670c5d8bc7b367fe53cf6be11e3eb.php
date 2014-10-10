@@ -94,7 +94,9 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
             <a href=\"";
         // line 57
         echo $this->env->getExtension('routing')->getPath("login_login_signup");
-        echo "\" >Sign Up</a> | <a href=\"javascript:;\" >Forgot Password</a></td>
+        echo "\" >Sign Up</a> | <a href=\"";
+        echo $this->env->getExtension('routing')->getPath("login_login_resetpassword");
+        echo "\" >Forgot Password</a></td>
             </tr>
             </table>
         </form>
@@ -128,6 +130,6 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
 
     public function getDebugInfo()
     {
-        return array (  116 => 68,  110 => 65,  107 => 64,  105 => 63,  96 => 57,  75 => 39,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
+        return array (  118 => 68,  112 => 65,  109 => 64,  107 => 63,  96 => 57,  75 => 39,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
     }
 }

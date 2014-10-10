@@ -38,40 +38,49 @@ class __TwigTemplate_109f21d6c59887eedabab2893d5be1932f85b60badd35da2a1e1129039d
 <div class=\"container\" >
     <form id=\"form\" class=\"well\" method=\"POST\" action=\"";
         // line 11
-        echo $this->env->getExtension('routing')->getPath("login_login_signup");
-        echo "\" data-validate=\"parsley\">
+        echo $this->env->getExtension('routing')->getPath("login_login_saveaccount");
+        echo "\" data-validate=\"parsley\" name=\"update\" >
          <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
             <tr> 
                 <td align=\"center\" colspan=\"6\"><h2>Edit ";
         // line 14
-        echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "firstName"), "html", null, true);
         echo " Account</h2></td>
+            </tr>
+            <tr> 
+                <td></td>
+                <td><input type=\"hidden\" name=\"userid\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" data-type=\"userid\" placeholder=\"Please enter your email address\" value=\"";
+        // line 18
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "userid"), "html", null, true);
+        echo "\" /></td>
             </tr>
             <tr> 
                 <td><label>Email Address</label></td>
                 <td><input type=\"text\" name=\"email\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" data-type=\"email\" placeholder=\"Please enter your email address\" value=\"";
-        // line 18
-        echo twig_escape_filter($this->env, (isset($context["email"]) ? $context["email"] : $this->getContext($context, "email")), "html", null, true);
+        // line 22
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "userName"), "html", null, true);
         echo "\" readonly=\"readonly\" /></td>
             </tr>
             <tr> 
                 <td><label>First Name</label></td>
-                <td><input type=\"text\" name=\"firstname\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" placeholder=\"Please enter your first name\"  value=";
-        // line 22
-        echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
-        echo "></td>
+                <td><input type=\"text\" name=\"firstname\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" placeholder=\"Please enter your first name\"  value=\"";
+        // line 26
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "firstName"), "html", null, true);
+        echo "\" /></td>
             </tr>
             <tr> 
                 <td><label>Last Name</label></td>
                 <td><input type=\"text\" name=\"lastname\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" placeholder=\"Please enter your last name\" value=\"";
-        // line 26
-        echo twig_escape_filter($this->env, (isset($context["lastname"]) ? $context["lastname"] : $this->getContext($context, "lastname")), "html", null, true);
+        // line 30
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "lastName"), "html", null, true);
         echo "\"/></td>
             </tr>
             <tr> 
                 <td colspan=\"8\" style=\"text-align:center;\">
-                <button class=\"btn btn-primary\" type=\"submit\" >Create Account</button> | <a href=\"";
-        // line 30
+                <button class=\"btn btn-primary\" type=\"submit\" >Update ";
+        // line 34
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "firstName"), "html", null, true);
+        echo " Account</button> | <a href=\"";
         echo $this->env->getExtension('routing')->getPath("login_login_homepage");
         echo "\" >&raquo; Back to Login Page</a></td>
             </tr>
@@ -93,6 +102,6 @@ class __TwigTemplate_109f21d6c59887eedabab2893d5be1932f85b60badd35da2a1e1129039d
 
     public function getDebugInfo()
     {
-        return array (  75 => 30,  68 => 26,  61 => 22,  54 => 18,  47 => 14,  41 => 11,  31 => 3,  28 => 2,);
+        return array (  82 => 34,  75 => 30,  68 => 26,  61 => 22,  54 => 18,  47 => 14,  41 => 11,  31 => 3,  28 => 2,);
     }
 }

@@ -51,9 +51,7 @@ class __TwigTemplate_012fe590842e43aa273607eae27e1885b3ae2a09639fcb84bcd1b4341ef
     <h2>Welcome back, <span>";
         // line 17
         echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
-        echo " ";
-        echo twig_escape_filter($this->env, (isset($context["userid"]) ? $context["userid"] : $this->getContext($context, "userid")), "html", null, true);
-        echo "  </span></h2>
+        echo " </span></h2>
 </div> 
 
     <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
@@ -62,7 +60,9 @@ class __TwigTemplate_012fe590842e43aa273607eae27e1885b3ae2a09639fcb84bcd1b4341ef
                 <a href=\"";
         // line 23
         echo $this->env->getExtension('routing')->getPath("login_login_editaccount");
-        echo "\" >Edit Account</a> | <a href=\"#\" >Change Password</a> | <a href=\"";
+        echo "\" >Edit Account</a> | <a href=\"";
+        echo $this->env->getExtension('routing')->getPath("login_login_editpassword");
+        echo "\" >Change Password</a> | <a href=\"";
         echo $this->env->getExtension('routing')->getPath("login_login_logout");
         echo "\" >Logout</a></td>
 
@@ -84,6 +84,6 @@ class __TwigTemplate_012fe590842e43aa273607eae27e1885b3ae2a09639fcb84bcd1b4341ef
 
     public function getDebugInfo()
     {
-        return array (  64 => 23,  53 => 17,  50 => 16,  47 => 15,  32 => 3,  29 => 2,);
+        return array (  62 => 23,  53 => 17,  50 => 16,  47 => 15,  32 => 3,  29 => 2,);
     }
 }

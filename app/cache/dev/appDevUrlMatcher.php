@@ -156,6 +156,26 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::editaccountAction',  '_route' => 'login_login_editaccount',);
         }
 
+        // login_login_saveaccount
+        if ($pathinfo === '/saveaccount') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::saveaccountAction',  '_route' => 'login_login_saveaccount',);
+        }
+
+        // login_login_editpassword
+        if ($pathinfo === '/editpassword') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::editpasswordAction',  '_route' => 'login_login_editpassword',);
+        }
+
+        // login_login_savepassword
+        if ($pathinfo === '/savepassword') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::savepasswordAction',  '_route' => 'login_login_savepassword',);
+        }
+
+        // login_login_resetpassword
+        if ($pathinfo === '/resetpassword') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::resetpasswordAction',  '_route' => 'login_login_resetpassword',);
+        }
+
         // login_login_success
         if ($pathinfo === '/success') {
             return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::successAction',  '_route' => 'login_login_success',);

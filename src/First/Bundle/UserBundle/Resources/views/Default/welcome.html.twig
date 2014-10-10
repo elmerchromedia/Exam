@@ -14,13 +14,13 @@
 {%endblock%}
    {%block container %}
 <div class="container">
-    <h2>Welcome back, <span>{{name}} {{userid}}  </span></h2>
+    <h2>Welcome back, <span>{{name}} </span></h2>
 </div> 
 
     <table width="100%" cellpadding="5" cellspacing="5">
             <tr> 
                 <td colspan="8" style="text-align:center;">
-                <a href="{{path('login_login_editaccount')}}" >Edit Account</a> | <a href="#" >Change Password</a> | <a href="{{path('login_login_logout')}}" >Logout</a></td>
+                <a href="{{path('login_login_editaccount')}}" >Edit Account</a> | <a href="{{path('login_login_editpassword')}}" >Change Password</a> | <a href="{{path('login_login_logout')}}" >Logout</a></td>
 
             </tr>
     </table>

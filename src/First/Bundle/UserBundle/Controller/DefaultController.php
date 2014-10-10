@@ -64,6 +64,20 @@ class DefaultController extends Controller {
             $em->persist($user);
             $em->flush();
 
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Hello Email')
+                ->setFrom('elmer.malinao@chromedia.com')
+                ->setTo($username)
+                ->setContentType("text/html")
+                ->setBody(
+                    $this->renderView(
+                        'FirstUserBundle:Default:email.txt.twig',
+                        array('name' => $name)
+                    )
+                )
+            ;
+            $this->get('mailer')->send($message);
+
             return $this->redirect('login');
         }
         return $this->render('FirstUserBundle:Default:signup.html.twig');
@@ -75,44 +89,114 @@ class DefaultController extends Controller {
 
        $id = $session->get('userid');
 
-       $user = new Users();
        $em = $this->getDoctrine()->getManager();
 
        $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
        // var_dump($user); exit;
 
-       if (!$user) {
+       $parameters = array();
+        if (!$user) {
            throw $this->createNotFoundException(
                'No user found for id '.$id
            );
-       }else{
+        }else{
 
-           // $user->setUsername($user->getUserName());
-           // $user->setFirstName($user->getFirstName());
-           // $user->setLastName($user->getLastName());
-           //$em->flush();
-           $data = array(
-            'name'  => $user->getFirstName(),
-            'lastname'  => $user->getLastName(),
-            'email'  => $user->getUsername()
-          );
-           return $this->render('FirstUserBundle:Default:editaccount.html.twig' ,$data);
-
-           if ($request->getMethod() == 'POST') {
-            $user = new Users();
-            $user->setFirstName($data->getFirstName());
-            $user->setLastName($data->getLastName());
-            //$user->setPassword(sha1($password));
-            //$user->setUsername($username);
-            $em = $this->getDoctrine()->getManager();
-            $em->update($user);
-            $em->flush();
-
-                return $this->redirect('login');
+          $parameters = array('user' => $user);
+        
         }
+        return $this->render('FirstUserBundle:Default:editaccount.html.twig', $parameters);
+    }
 
-      }
-}
+     public function saveaccountAction(Request $request) {
+       $session = new Session();
+       $session->start();
+
+       $id = $session->get('userid');
+
+//return $this->render($id);
+
+
+       $em = $this->getDoctrine()->getManager();
+
+       $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+       //var_dump($user); exit;
+       
+         $parameters = array();
+          if (!$user) {
+             throw $this->createNotFoundException(
+                 'No user found for id '.$id
+             );
+          }else{
+            //$form = $request->request->get('lastname');
+            //print_r($form); exit;
+            
+            $user->setFirstName($request->request->get('firstname')); 
+            $user->setLastName($request->request->get('lastname')); 
+            $em->flush();
+          }
+        return $this->redirect($this->generateUrl('login_login_homepage'));
+        //return $this->render('FirstUserBundle:Default:welcome.html.twig');
+    }
+
+    public function editpasswordAction(Request $request) {
+       $session = new Session();
+       $session->start();
+
+       $id = $session->get('userid');
+
+       $em = $this->getDoctrine()->getManager();
+
+       $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+       // var_dump($user); exit;
+
+       $parameters = array();
+        if (!$user) {
+           throw $this->createNotFoundException(
+               'No user found for id '.$id
+           );
+        }else{
+
+          $parameters = array('user' => $user);
+        
+        }
+        return $this->render('FirstUserBundle:Default:editpassword.html.twig', $parameters);
+    }
+
+     public function savepasswordAction(Request $request) {
+       $session = new Session();
+       $session->start();
+
+       $id = $session->get('userid');
+
+//return $this->render($id); exit;
+
+
+       $em = $this->getDoctrine()->getManager();
+
+       $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+       //var_dump($user); exit;
+       
+         $parameters = array();
+          if (!$user) {
+             throw $this->createNotFoundException(
+                 'No user found for id '.$id
+             );
+          }else{
+            //$form = $request->request->get('lastname');
+            //print_r($form); exit;
+            
+            $user->setPassword(sha1($request->request->get('password'))); 
+            //$user->setLastName($request->request->get('lastname')); 
+            $em->flush();
+          }
+        return $this->redirect($this->generateUrl('login_login_homepage'));
+        //return $this->render('FirstUserBundle:Default:welcome.html.twig');
+    }
+
+    public function resetpasswordAction(Request $request) {
+        return $this->render('FirstUserBundle:Default:resetpassword.html.twig');
+    }
+
     public function logoutAction(Request $request) {
         $session = $this->getRequest()->getSession();
         $session->clear();

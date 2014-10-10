@@ -21,6 +21,26 @@ login_login_logout:
 login_login_editaccount:
     path:  /editaccount
     defaults: { _controller: FirstUserBundle:Default:editaccount }
+    #requirements:
+            #_method: POST
+
+login_login_saveaccount:
+    path:  /saveaccount
+    defaults: { _controller: FirstUserBundle:Default:saveaccount }
+    #requirements:
+            #_method: POST            
+
+login_login_editpassword:
+    path:  /editpassword
+    defaults: { _controller: FirstUserBundle:Default:editpassword }
+
+login_login_savepassword:
+    path:  /savepassword
+    defaults: { _controller: FirstUserBundle:Default:savepassword }
+
+login_login_resetpassword:
+    path:  /resetpassword
+    defaults: { _controller: FirstUserBundle:Default:resetpassword }
 
 login_login_success:
     path:  /success
