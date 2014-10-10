@@ -18,8 +18,7 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "jms/security-extra-bundle": "1.2.*",
-        "jms/di-extra-bundle": "1.1.*",
+        "jms/security-extra-bundle": "1.5.1",
         "kriswallsmith/assetic": "1.1.*@dev"
     },
     "require-dev": {
