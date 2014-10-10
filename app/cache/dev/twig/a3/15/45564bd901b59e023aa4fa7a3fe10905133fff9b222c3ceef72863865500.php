@@ -43,40 +43,39 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
 ";
         // line 13
         $this->displayBlock('stylesheets', $context, $blocks);
-        // line 15
+        // line 29
         echo "        </head>
-
         <body>
 ";
-        // line 18
+        // line 31
         $this->displayBlock('container', $context, $blocks);
-        // line 20
+        // line 43
         echo "
 
             <script src=\"";
-        // line 22
+        // line 45
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/jquery.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 23
+        // line 46
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/bootstrap.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 24
+        // line 47
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/parsley/parsley.min.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 25
+        // line 48
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/parsley/parsley-standalone.min.js"), "html", null, true);
         echo "\"></script>
             <script src=\"";
-        // line 26
+        // line 49
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/userlogin/js/parsley/parsley.extend.min.js"), "html", null, true);
         echo "\"></script>
 ";
-        // line 27
+        // line 50
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 29
+        // line 52
         echo "        </body>
     </html>
 
@@ -86,17 +85,54 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
     // line 13
     public function block_stylesheets($context, array $blocks = array())
     {
+        // line 14
+        echo "<style type=\"text/css\">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #5d891a;
+        }
+        .nav{width:100%; height:100%; margin:0 auto; padding:0;}
+        .nav ul{margin:0 auto;}
+        .nav ul li{list-style:none; display:inline-block; text-align:center; margin: 0 150px;}
+        .nav ul li a{color:#000; font-family:tahoma; font-size:13px;}
+        .nav ul li a:hover{color:#fff;}
+        .maincontent{margin:10px auto; padding:0;}
+        .maincontent h1{font-family:tahoma; font-size:22px; color:#ffb802; font-style:italic; text-align: center;}
+    </style>
+";
     }
 
-    // line 18
+    // line 31
     public function block_container($context, array $blocks = array())
     {
+        // line 32
+        echo "    <div class=\"nav\">
+            <ul>
+                <li><a href=\"";
+        // line 34
+        echo $this->env->getExtension('routing')->getPath("_welcome");
+        echo "\">Home</a></li>
+                <li><a href=\"";
+        // line 35
+        echo $this->env->getExtension('routing')->getPath("login_login_login");
+        echo "\" target=\"_blank\">Login</a></li>
+                <li><a href=\"";
+        // line 36
+        echo $this->env->getExtension('routing')->getPath("login_login_signup");
+        echo "\" target=\"_blank\">Signup</a></li>
+            </ul>
+    </div>
+<div class=\"maincontent\">
+    <h1>welcome to my first symfony 2.5 system with twig templates</h1>
+</div>
+";
     }
 
-    // line 27
+    // line 50
     public function block_javascripts($context, array $blocks = array())
     {
-        // line 28
+        // line 51
         echo " ";
     }
 
@@ -112,6 +148,6 @@ class __TwigTemplate_a31545564bd901b59e023aa4fa7a3fe10905133fff9b222c3ceef728638
 
     public function getDebugInfo()
     {
-        return array (  100 => 28,  97 => 27,  92 => 18,  87 => 13,  80 => 29,  78 => 27,  74 => 26,  70 => 25,  66 => 24,  62 => 23,  58 => 22,  54 => 20,  52 => 18,  47 => 15,  45 => 13,  41 => 12,  37 => 11,  33 => 10,  22 => 1,);
+        return array (  136 => 51,  133 => 50,  122 => 36,  118 => 35,  114 => 34,  110 => 32,  107 => 31,  89 => 14,  86 => 13,  79 => 52,  77 => 50,  73 => 49,  69 => 48,  65 => 47,  61 => 46,  57 => 45,  53 => 43,  51 => 31,  47 => 29,  45 => 13,  41 => 12,  37 => 11,  33 => 10,  22 => 1,);
     }
 }

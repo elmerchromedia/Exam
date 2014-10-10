@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class DefaultController extends Controller {
 
     public function indexAction(Request $request) {
+            return $this->render('FirstUserBundle:Default:index.html.twig');
+    }
+    public function loginAction(Request $request) {
             return $this->render('FirstUserBundle:Default:login.html.twig');
     }
 
@@ -29,8 +32,7 @@ class DefaultController extends Controller {
             $user = $repository->findOneBy(array('email' => $username, 'password' => $password));
 
             if (!$user) {
-                 //return $this->render('FirstUserBundle:Default:index.html.twig', array('name' => 'Login Error'));
-                return $this->redirect($this->generateUrl('login'));
+              return $this->render('FirstUserBundle:Default:Login.html.twig');
             }else{
                 $session->set('userid' , $user->getUserId());
                 return $this->render('FirstUserBundle:Default:welcome.html.twig', array('userid' => $user->getUserid(), 'name' => $user->getFirstName()));
@@ -77,7 +79,7 @@ class DefaultController extends Controller {
        $em = $this->getDoctrine()->getManager();
 
        $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
-       var_dump($user); exit;
+       // var_dump($user); exit;
 
        if (!$user) {
            throw $this->createNotFoundException(
@@ -85,19 +87,37 @@ class DefaultController extends Controller {
            );
        }else{
 
-           $user->setUsername($user->getUserName());
-           $user->setFirstName($user->getFirstName());
-           $user->setLastName($user->getLastName());
-           $em->flush();
+           // $user->setUsername($user->getUserName());
+           // $user->setFirstName($user->getFirstName());
+           // $user->setLastName($user->getLastName());
+           //$em->flush();
+           $data = array(
+            'name'  => $user->getFirstName(),
+            'lastname'  => $user->getLastName(),
+            'email'  => $user->getUsername()
+          );
+           return $this->render('FirstUserBundle:Default:editaccount.html.twig' ,$data);
 
-            return $this->redirect('editaccount');
+           if ($request->getMethod() == 'POST') {
+            $user = new Users();
+            $user->setFirstName($data->getFirstName());
+            $user->setLastName($data->getLastName());
+            //$user->setPassword(sha1($password));
+            //$user->setUsername($username);
+            $em = $this->getDoctrine()->getManager();
+            $em->update($user);
+            $em->flush();
+
+                return $this->redirect('login');
+        }
 
       }
 }
     public function logoutAction(Request $request) {
         $session = $this->getRequest()->getSession();
         $session->clear();
-        return $this->render('FirstUserBundle:Default:login.html.twig');
+        return $this->redirect('login');
+        //return $this->render('FirstUserBundle:Default:login.html.twig');
     }
 
 }

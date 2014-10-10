@@ -71,7 +71,7 @@ class __TwigTemplate_57e0a5570b13585b8b5e5c50e5f43523cbf831572de86ddf86938f90c3d
                 <td colspan=\"8\" style=\"text-align:center;\">
                 <button class=\"btn btn-primary\" type=\"submit\" >Create Account</button> | <a href=\"";
         // line 41
-        echo $this->env->getExtension('routing')->getPath("login_login_homepage");
+        echo $this->env->getExtension('routing')->getPath("login_login_login");
         echo "\" >&raquo; Back to Login Page</a></td>
             </tr>
         </table>

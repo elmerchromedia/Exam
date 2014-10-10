@@ -11,11 +11,34 @@
         <link href="{{asset('bundles/userlogin/css/bootstrap-responsive.css')}}" rel="stylesheet">
         <link href="{{asset('bundles/userlogin/css/parsley/parsley.css')}}" rel="stylesheet">
 {%block stylesheets %}
+<style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #5d891a;
+        }
+        .nav{width:100%; height:100%; margin:0 auto; padding:0;}
+        .nav ul{margin:0 auto;}
+        .nav ul li{list-style:none; display:inline-block; text-align:center; margin: 0 150px;}
+        .nav ul li a{color:#000; font-family:tahoma; font-size:13px;}
+        .nav ul li a:hover{color:#fff;}
+        .maincontent{margin:10px auto; padding:0;}
+        .maincontent h1{font-family:tahoma; font-size:22px; color:#ffb802; font-style:italic; text-align: center;}
+    </style>
 {%endblock%}
         </head>
-
         <body>
 {%block container %}
+    <div class="nav">
+            <ul>
+                <li><a href="{{path('_welcome')}}">Home</a></li>
+                <li><a href="{{path('login_login_login')}}" target="_blank">Login</a></li>
+                <li><a href="{{path('login_login_signup')}}" target="_blank">Signup</a></li>
+            </ul>
+    </div>
+<div class="maincontent">
+    <h1>welcome to my first symfony 2.5 system with twig templates</h1>
+</div>
 {%endblock%}
 
 
