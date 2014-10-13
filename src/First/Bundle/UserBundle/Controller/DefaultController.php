@@ -4,11 +4,15 @@ namespace First\Bundle\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use First\Bundle\UserBundle\Entity\Users;
 use First\Bundle\UserBundle\Modals\Login;
 use Symfony\Component\HttpFoundation\Session\Session; 
+use Symfony\Component\HttpFoundation;
+
 
 class DefaultController extends Controller {
 
@@ -63,17 +67,17 @@ class DefaultController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            $parameters = array();
 
+            $parameters = array('user' => $user);
             $message = \Swift_Message::newInstance()
                 ->setSubject('Hello Email')
                 ->setFrom('elmer.malinao@chromedia.com')
-                ->setTo($username)
+                ->setTo($username = $request->get('email'))
                 ->setContentType("text/html")
                 ->setBody(
                     $this->renderView(
-                        'FirstUserBundle:Default:email.txt.twig',
-                        array('name' => $name)
-                    )
+                        'FirstUserBundle:Default:email.txt.twig', $parameters)
                 )
             ;
             $this->get('mailer')->send($message);
@@ -168,33 +172,96 @@ class DefaultController extends Controller {
 
        $id = $session->get('userid');
 
-//return $this->render($id); exit;
 
 
        $em = $this->getDoctrine()->getManager();
 
        $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
-       //var_dump($user); exit;
        
          $parameters = array();
           if (!$user) {
              throw $this->createNotFoundException(
-                 'No user found for id '.$id
+                 'No user found for id ' .$id
              );
           }else{
-            //$form = $request->request->get('lastname');
-            //print_r($form); exit;
-            
+      
             $user->setPassword(sha1($request->request->get('password'))); 
-            //$user->setLastName($request->request->get('lastname')); 
+            
             $em->flush();
           }
         return $this->redirect($this->generateUrl('login_login_homepage'));
-        //return $this->render('FirstUserBundle:Default:welcome.html.twig');
     }
 
     public function resetpasswordAction(Request $request) {
         return $this->render('FirstUserBundle:Default:resetpassword.html.twig');
+    }
+
+    public function updatepasswordAction(Request $request) {
+       $email = $request->get('email');
+       $em = $this->getDoctrine()->getManager();
+       $user = $em->getRepository('FirstUserBundle:Users')->findOneByEmail($email);
+
+       $parameters = array();
+
+        if (!$user) {
+           throw $this->createNotFoundException(
+               'No user found for email '.$email
+           );
+        }else{
+
+          $parameters = array('user' => $user);
+        
+        }
+
+        $message = \Swift_Message::newInstance()
+                ->setSubject('Password Reset Notification')
+                ->setFrom('elmer.malinao@chromedia.com')
+                ->setTo($username = $request->get('email'))
+                ->setContentType("text/html")
+                ->setBody(
+                    $this->renderView('FirstUserBundle:Default:passwordresetemail.txt.twig',$parameters)
+                )
+            ;
+            $this->get('mailer')->send($message);
+            return $this->redirect($this->generateUrl('login_login_login'));
+    }
+
+    public function emaillinkAction(Request $request) {
+
+      $id = $request->get('id');
+      $em = $this->getDoctrine()->getManager();
+
+      $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+      $parameters = array();
+       
+
+      $parameters = array('user' => $user);
+        
+      //var_dump($user);
+      
+      return $this->render('FirstUserBundle:Default:updatepassword.html.twig', array('user'=>$user));
+      //return $this->redirect($this->generateUrl('login_login_passwordresetted', array('userid'=>$id)));
+     
+    }
+
+    public function newpasswordAction(Request $request) {
+  
+       $id = $request->get('userid');
+       
+       $em = $this->getDoctrine()->getManager();
+       $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+       //var_dump($user); exit;
+       $parameters = array();
+          if (!$user) {
+             throw $this->createNotFoundException(
+                 'No user found for id ' .$id
+             );
+          }else{
+          
+            $user->setPassword(sha1($request->request->get('password'))); 
+            $em->flush();
+          }
+        return $this->redirect($this->generateUrl('login_login_homepage'));
     }
 
     public function logoutAction(Request $request) {

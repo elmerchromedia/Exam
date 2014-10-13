@@ -36,7 +36,10 @@ class __TwigTemplate_d5add83041fcf46efbc38d786f283f444397bc39abadb21b19e9198d56b
         }
 </style>
 <div class=\"container\" >
-    <h1>Hello </h1>
+    <h1>Hello ";
+        // line 11
+        echo $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "firstName");
+        echo " </h1>
 </div>
  ";
     }
@@ -53,6 +56,6 @@ class __TwigTemplate_d5add83041fcf46efbc38d786f283f444397bc39abadb21b19e9198d56b
 
     public function getDebugInfo()
     {
-        return array (  31 => 3,  28 => 2,);
+        return array (  41 => 11,  31 => 3,  28 => 2,);
     }
 }

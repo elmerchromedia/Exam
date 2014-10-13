@@ -42,6 +42,18 @@ login_login_resetpassword:
     path:  /resetpassword
     defaults: { _controller: FirstUserBundle:Default:resetpassword }
 
-login_login_success:
-    path:  /success
-    defaults: { _controller: FirstUserBundle:Default:success }    
+login_login_updatepassword:
+    path:  /updatepassword
+    defaults: { _controller: FirstUserBundle:Default:updatepassword } 
+
+login_login_email_link:
+    path:  /emaillink
+    defaults: { _controller: FirstUserBundle:Default:emaillink }    
+
+login_login_passwordresetted:
+    path:  /passwordresetted
+    defaults: { _controller: FirstUserBundle:Default:newpassword }
+
+login_login_passwordreviewed:
+    path:  /passwordreviewed
+    defaults: { _controller: FirstUserBundle:Default:reviewpassword }    

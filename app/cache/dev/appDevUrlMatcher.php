@@ -176,9 +176,27 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::resetpasswordAction',  '_route' => 'login_login_resetpassword',);
         }
 
-        // login_login_success
-        if ($pathinfo === '/success') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::successAction',  '_route' => 'login_login_success',);
+        // login_login_updatepassword
+        if ($pathinfo === '/updatepassword') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::updatepasswordAction',  '_route' => 'login_login_updatepassword',);
+        }
+
+        // login_login_email_link
+        if ($pathinfo === '/emaillink') {
+            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::emaillinkAction',  '_route' => 'login_login_email_link',);
+        }
+
+        if (0 === strpos($pathinfo, '/passwordre')) {
+            // login_login_passwordresetted
+            if ($pathinfo === '/passwordresetted') {
+                return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::newpasswordAction',  '_route' => 'login_login_passwordresetted',);
+            }
+
+            // login_login_passwordreviewed
+            if ($pathinfo === '/passwordreviewed') {
+                return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::reviewpasswordAction',  '_route' => 'login_login_passwordreviewed',);
+            }
+
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

@@ -38,7 +38,7 @@ class __TwigTemplate_7579a1894e50612205a82b4073907ea0a22ac77c52d4d1a2e582820a37a
 <div class=\"container\" >
     <form id=\"form\" class=\"well\" method=\"POST\" action=\"";
         // line 11
-        echo $this->env->getExtension('routing')->getPath("login_login_savepassword");
+        echo $this->env->getExtension('routing')->getPath("login_login_updatepassword");
         echo "\" data-validate=\"parsley\" name=\"updatepass\" >
          <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
             <tr> 
