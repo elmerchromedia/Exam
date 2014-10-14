@@ -56,4 +56,8 @@ login_login_passwordresetted:
 
 login_login_passwordreviewed:
     path:  /passwordreviewed
-    defaults: { _controller: FirstUserBundle:Default:reviewpassword }    
+    defaults: { _controller: FirstUserBundle:Default:reviewpassword }
+
+login_login_profile:
+    path:  /profile
+    defaults: { _controller: FirstUserBundle:Default:profile }    

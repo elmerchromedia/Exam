@@ -186,15 +186,23 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::emaillinkAction',  '_route' => 'login_login_email_link',);
         }
 
-        if (0 === strpos($pathinfo, '/passwordre')) {
-            // login_login_passwordresetted
-            if ($pathinfo === '/passwordresetted') {
-                return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::newpasswordAction',  '_route' => 'login_login_passwordresetted',);
+        if (0 === strpos($pathinfo, '/p')) {
+            if (0 === strpos($pathinfo, '/passwordre')) {
+                // login_login_passwordresetted
+                if ($pathinfo === '/passwordresetted') {
+                    return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::newpasswordAction',  '_route' => 'login_login_passwordresetted',);
+                }
+
+                // login_login_passwordreviewed
+                if ($pathinfo === '/passwordreviewed') {
+                    return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::reviewpasswordAction',  '_route' => 'login_login_passwordreviewed',);
+                }
+
             }
 
-            // login_login_passwordreviewed
-            if ($pathinfo === '/passwordreviewed') {
-                return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::reviewpasswordAction',  '_route' => 'login_login_passwordreviewed',);
+            // login_login_profile
+            if ($pathinfo === '/profile') {
+                return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::profileAction',  '_route' => 'login_login_profile',);
             }
 
         }

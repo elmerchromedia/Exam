@@ -50,7 +50,7 @@ class __TwigTemplate_012fe590842e43aa273607eae27e1885b3ae2a09639fcb84bcd1b4341ef
         echo "<div class=\"container\">
     <h2>Welcome back, <span>";
         // line 17
-        echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "firstName"), "html", null, true);
         echo " </span></h2>
 </div> 
 

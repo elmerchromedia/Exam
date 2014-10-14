@@ -36,8 +36,18 @@
 {%endblock%}
    {%block container %}
     <div class="container">
+
+        
+
         <form class="form-signin" method ="POST" action="{{path('login_login_homepage')}}" data-validate="parsley">
         <table width="100%" cellpadding="5" cellspacing="5">
+            <tr> 
+                <td align="center" style="color:#ff0000; font-style:italic;">{% for flashMessage in app.session.getFlashBag.get('error') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}</td>
+            </tr>
             <tr> 
                 <td><h2 class="form-signin-heading">Sign In</h2></td>
             </tr>

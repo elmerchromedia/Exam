@@ -64,19 +64,13 @@ class __TwigTemplate_469261d45f4884246c1cb9661d14e9b86aa61f8a5016a196c1a14af01cb
           
             <tr> 
                 <td><label>New Password</label></td>
-                <td><input type=\"password\" id=\"password\" name=\"password\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" placeholder=\"Please enter your desired password\" value=\"";
-        // line 27
-        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "password"), "html", null, true);
-        echo "\" />
+                <td><input type=\"password\" id=\"password\" name=\"password\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" placeholder=\"Please enter your desired password\" value=\"\" />
                 </td>
             </tr>
             <tr> 
                 <td><label>Confirm Password</label></td>
                 <td>
-                <input type=\"password\" id=\"passwordRe\" name=\"passwordRe\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" data-equalto=\"#password\" placeholder=\"Please enter again your desired password\" value=\"";
-        // line 33
-        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "password"), "html", null, true);
-        echo "\" />
+                <input type=\"password\" id=\"passwordRe\" name=\"passwordRe\" class=\"input-xlarge\" data-trigger=\"change\" data-required=\"true\" data-equalto=\"#password\" placeholder=\"Please enter again your desired password\" value=\"\" />
                 </td>
             </tr>
             <tr> 
@@ -106,6 +100,6 @@ class __TwigTemplate_469261d45f4884246c1cb9661d14e9b86aa61f8a5016a196c1a14af01cb
 
     public function getDebugInfo()
     {
-        return array (  86 => 38,  78 => 33,  69 => 27,  61 => 22,  54 => 18,  47 => 14,  41 => 11,  31 => 3,  28 => 2,);
+        return array (  80 => 38,  61 => 22,  54 => 18,  47 => 14,  41 => 11,  31 => 3,  28 => 2,);
     }
 }

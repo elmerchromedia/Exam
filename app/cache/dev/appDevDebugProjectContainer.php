@@ -287,9 +287,12 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAssetic_AssetManagerService()
     {
+        $a = $this->get('templating.loader');
+
         $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), new \Assetic\Cache\ConfigCache('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/cache/dev/assetic/config'), true)));
 
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($this->get('templating.loader'), '', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FirstUserBundle', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/FirstUserBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FirstUserBundle', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/First/Bundle/UserBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
 
         return $instance;
     }
@@ -2975,7 +2978,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FirstUserBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
         $instance->addExtension(new \Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension());
         $instance->addGlobal('app', $this->get('templating.globals'));
@@ -3937,7 +3940,7 @@ class appDevDebugProjectContainer extends Container
             ),
             'assetic.cache_dir' => '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/cache/dev/assetic',
             'assetic.bundles' => array(
-
+                0 => 'FirstUserBundle',
             ),
             'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
             'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',

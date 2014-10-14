@@ -70,11 +70,35 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
     {
         // line 38
         echo "    <div class=\"container\">
+
+        
+
         <form class=\"form-signin\" method =\"POST\" action=\"";
-        // line 39
+        // line 42
         echo $this->env->getExtension('routing')->getPath("login_login_homepage");
         echo "\" data-validate=\"parsley\">
         <table width=\"100%\" cellpadding=\"5\" cellspacing=\"5\">
+            <tr> 
+                <td align=\"center\" style=\"color:#ff0000; font-style:italic;\">";
+        // line 45
+        $context['_parent'] = (array) $context;
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "session"), "getFlashBag"), "get", array(0 => "error"), "method"));
+        foreach ($context['_seq'] as $context["_key"] => $context["flashMessage"]) {
+            // line 46
+            echo "            <div class=\"flash-notice\">
+                ";
+            // line 47
+            echo twig_escape_filter($this->env, (isset($context["flashMessage"]) ? $context["flashMessage"] : $this->getContext($context, "flashMessage")), "html", null, true);
+            echo "
+            </div>
+        ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['flashMessage'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 49
+        echo "</td>
+            </tr>
             <tr> 
                 <td><h2 class=\"form-signin-heading\">Sign In</h2></td>
             </tr>
@@ -92,7 +116,7 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
             <tr> 
                 <td><button class=\"btn btn-large btn-primary\" type=\"submit\">Sign in</button>
             <a href=\"";
-        // line 57
+        // line 67
         echo $this->env->getExtension('routing')->getPath("login_login_signup");
         echo "\" >Sign Up</a> | <a href=\"";
         echo $this->env->getExtension('routing')->getPath("login_login_resetpassword");
@@ -103,18 +127,18 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
 
     </div> 
     ";
-        // line 63
+        // line 73
         if (array_key_exists("name", $context)) {
-            // line 64
+            // line 74
             echo "    <div class=\"alert-info fade in\">
         <strong>";
-            // line 65
+            // line 75
             echo twig_escape_filter($this->env, (isset($context["name"]) ? $context["name"] : $this->getContext($context, "name")), "html", null, true);
             echo "</strong>
     </div>
     ";
         }
-        // line 68
+        // line 78
         echo "    ";
     }
 
@@ -130,6 +154,6 @@ class __TwigTemplate_2aef5b454d88f919c2de1c6cf623a9f7317670c5d8bc7b367fe53cf6be1
 
     public function getDebugInfo()
     {
-        return array (  118 => 68,  112 => 65,  109 => 64,  107 => 63,  96 => 57,  75 => 39,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
+        return array (  142 => 78,  136 => 75,  133 => 74,  131 => 73,  120 => 67,  100 => 49,  91 => 47,  88 => 46,  84 => 45,  78 => 42,  72 => 38,  69 => 37,  32 => 3,  29 => 2,);
     }
 }

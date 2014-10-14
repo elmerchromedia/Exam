@@ -427,7 +427,9 @@
     <parameter key="assetic.value_supplier.class">Symfony\Bundle\AsseticBundle\DefaultValueSupplier</parameter>
     <parameter key="assetic.node.paths" type="collection"/>
     <parameter key="assetic.cache_dir">/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/cache/dev/assetic</parameter>
-    <parameter key="assetic.bundles" type="collection"/>
+    <parameter key="assetic.bundles" type="collection">
+      <parameter>FirstUserBundle</parameter>
+    </parameter>
     <parameter key="assetic.twig_extension.class">Symfony\Bundle\AsseticBundle\Twig\AsseticExtension</parameter>
     <parameter key="assetic.twig_formula_loader.class">Assetic\Extension\Twig\TwigFormulaLoader</parameter>
     <parameter key="assetic.helper.dynamic.class">Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper</parameter>
@@ -2141,7 +2143,9 @@
             <argument type="service" id="templating.name_parser"/>
             <argument>true</argument>
             <argument type="collection"/>
-            <argument type="collection"/>
+            <argument type="collection">
+              <argument>FirstUserBundle</argument>
+            </argument>
             <argument type="service" id="assetic.value_supplier.default" on-invalid="null"/>
           </service>
         </argument>
@@ -2230,6 +2234,33 @@
           </service>
         </argument>
       </argument>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FirstUserBundle</argument>
+                  <argument>/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/FirstUserBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FirstUserBundle</argument>
+                  <argument>/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/First/Bundle/UserBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource" public="false">

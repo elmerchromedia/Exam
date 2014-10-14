@@ -42,6 +42,7 @@ class appDevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
         'login_login_email_link' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::emaillinkAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/emaillink',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
         'login_login_passwordresetted' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::newpasswordAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/passwordresetted',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
         'login_login_passwordreviewed' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::reviewpasswordAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/passwordreviewed',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
+        'login_login_profile' => array (  0 =>   array (  ),  1 =>   array (    '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::profileAction',  ),  2 =>   array (  ),  3 =>   array (    0 =>     array (      0 => 'text',      1 => '/profile',    ),  ),  4 =>   array (  ),  5 =>   array (  ),),
     );
 
     /**

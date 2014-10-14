@@ -11,6 +11,20 @@
     <form id="form" class="well" method="POST" action="{{path('login_login_signup')}}" data-validate="parsley">
          <table width="100%" cellpadding="5" cellspacing="5">
             <tr> 
+                <td colspan="6" align="center" style="color:#ff0000; font-style:italic;">{% for flashMessage in app.session.getFlashBag.get('error') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}</td>
+            </tr>
+            <tr> 
+                <td colspan="6" align="center" style="color:#ff0000; font-style:italic;">{% for flashMessage in app.session.getFlashBag.get('success') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}</td>
+            </tr>
+            <tr> 
                 <td align="center" colspan="6"><h2>Sign Up Your Account Now!..</h2></td>
             </tr>
             <tr> 
@@ -27,13 +41,13 @@
             </tr>
             <tr> 
                 <td><label>Password</label></td>
-                <td><input type="password" id="password" name="password" class="input-xlarge" data-trigger="change" data-required="true" placeholder="Please enter your desired password" />
+                <td><input type="password" id="password" name="password" class="input-xlarge" data-trigger="change" data-required="true" placeholder="Please enter your desired password" "data-parsley-minlength"="[6]" />
                 </td>
             </tr>
             <tr> 
                 <td><label>Confirm Password</label></td>
                 <td>
-                <input type="password" id="passwordRe" name="passwordRe" class="input-xlarge" data-trigger="change" data-required="true" data-equalto="#password" placeholder="Please enter again your desired password" />
+                <input type="password" id="passwordRe" name="passwordRe" class="input-xlarge" data-trigger="change" data-required="true" data-equalto="#password" placeholder="Please enter again your desired password" "data-parsley-minlength"="[6]" />
                 </td>
             </tr>
             <tr> 

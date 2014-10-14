@@ -40,6 +40,14 @@ class __TwigTemplate_d5add83041fcf46efbc38d786f283f444397bc39abadb21b19e9198d56b
         // line 11
         echo $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "firstName");
         echo " </h1>
+    <p>Welcome, here is the link of your new account below:<br />
+    http://symfony.localhost/app_dev.php/profile?id=";
+        // line 13
+        echo $this->getAttribute((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "userid");
+        echo "</p>
+    <p>Sincerely Yours,<br />
+    \t<span>Elmer P. Malinao</span>
+    </p>
 </div>
  ";
     }
@@ -56,6 +64,6 @@ class __TwigTemplate_d5add83041fcf46efbc38d786f283f444397bc39abadb21b19e9198d56b
 
     public function getDebugInfo()
     {
-        return array (  41 => 11,  31 => 3,  28 => 2,);
+        return array (  46 => 13,  41 => 11,  31 => 3,  28 => 2,);
     }
 }

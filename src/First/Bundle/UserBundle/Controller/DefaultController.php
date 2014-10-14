@@ -12,6 +12,8 @@ use First\Bundle\UserBundle\Entity\Users;
 use First\Bundle\UserBundle\Modals\Login;
 use Symfony\Component\HttpFoundation\Session\Session; 
 use Symfony\Component\HttpFoundation;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 class DefaultController extends Controller {
@@ -23,7 +25,7 @@ class DefaultController extends Controller {
             return $this->render('FirstUserBundle:Default:login.html.twig');
     }
 
-    public function welcomeAction(Request $request) {
+    public function welcomeAction(Request $request) { 
         $session = $this->getRequest()->getSession();
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository('FirstUserBundle:Users');
@@ -34,26 +36,48 @@ class DefaultController extends Controller {
             $password = sha1($request->get('password'));
 
             $user = $repository->findOneBy(array('email' => $username, 'password' => $password));
+            
+                if (!$user) {
+                  $this->get('session')->getFlashBag()->add('error', 'Unknown username or password!..');
+                  return $this->redirect('login');
+                  
+                }else{
 
-            if (!$user) {
-              return $this->render('FirstUserBundle:Default:Login.html.twig');
-            }else{
-                $session->set('userid' , $user->getUserId());
-                return $this->render('FirstUserBundle:Default:welcome.html.twig', array('userid' => $user->getUserid(), 'name' => $user->getFirstName()));
-            }
+                    $session->set('userid' , $user->getUserId());
+                    $parameters = array();
+
+                    $parameters = array('user' => $user);
+                    return $this->render('FirstUserBundle:Default:welcome.html.twig', array('user'=>$user));
+                }
         } else {
             if ($session->has('login')) {
                 $login = $session->get('login');
                 $username = $login->getUsername();
                 $password = $login->getPassword();
-                $user = $repository->findOneBy(array('email' => $username, 'password' => $password));
+                $parameters = array();
+
+                $parameters = array('user' => $user);
+                $user = $repository->findOneBy(array('email' => $username, 'password' => $password, 'user'=>$user));
             }
             return $this->render('FirstUserBundle:Default:login.html.twig');
         }
     }
 
+    public function countIdFirstAction(){
+        $user = new Users();
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT count(i.userid) FROM FirstUserBundle:Users i');
+
+        $count = $query->getResult();
+
+        return $count;
+
+    }
+
     public function signupAction(Request $request) {
+
         if ($request->getMethod() == 'POST') {
+
             $username = $request->get('email');
             $firstname = $request->get('firstname');
             $lastname = $request->get('lastname');
@@ -80,11 +104,28 @@ class DefaultController extends Controller {
                         'FirstUserBundle:Default:email.txt.twig', $parameters)
                 )
             ;
-            $this->get('mailer')->send($message);
-
-            return $this->redirect('login');
+              $this->get('mailer')->send($message);
+              $this->get('session')->getFlashBag()->add('success', 'Registered Successfully, Please check on your email address about the mail notification');
+              return $this->redirect('signup');
         }
+
+
         return $this->render('FirstUserBundle:Default:signup.html.twig');
+        
+    }
+
+    public function profileAction(Request $request) {
+
+      $id = $request->get('id'); 
+      $em = $this->getDoctrine()->getManager();
+      
+      $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
+      $parameters = array();
+       
+
+      $parameters = array('user' => $user);
+        
+      return $this->render('FirstUserBundle:Default:login.html.twig', array('user'=>$user));
     }
 
     public function editaccountAction(Request $request) {
@@ -96,7 +137,6 @@ class DefaultController extends Controller {
        $em = $this->getDoctrine()->getManager();
 
        $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
-       // var_dump($user); exit;
 
        $parameters = array();
         if (!$user) {
@@ -117,13 +157,12 @@ class DefaultController extends Controller {
 
        $id = $session->get('userid');
 
-//return $this->render($id);
+
 
 
        $em = $this->getDoctrine()->getManager();
 
        $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
-       //var_dump($user); exit;
        
          $parameters = array();
           if (!$user) {
@@ -131,15 +170,13 @@ class DefaultController extends Controller {
                  'No user found for id '.$id
              );
           }else{
-            //$form = $request->request->get('lastname');
-            //print_r($form); exit;
+            
             
             $user->setFirstName($request->request->get('firstname')); 
             $user->setLastName($request->request->get('lastname')); 
             $em->flush();
           }
         return $this->redirect($this->generateUrl('login_login_homepage'));
-        //return $this->render('FirstUserBundle:Default:welcome.html.twig');
     }
 
     public function editpasswordAction(Request $request) {
@@ -151,7 +188,6 @@ class DefaultController extends Controller {
        $em = $this->getDoctrine()->getManager();
 
        $user = $em->getRepository('FirstUserBundle:Users')->findOneByUserid($id);
-       // var_dump($user); exit;
 
        $parameters = array();
         if (!$user) {
@@ -171,8 +207,6 @@ class DefaultController extends Controller {
        $session->start();
 
        $id = $session->get('userid');
-
-
 
        $em = $this->getDoctrine()->getManager();
 
@@ -204,9 +238,9 @@ class DefaultController extends Controller {
        $parameters = array();
 
         if (!$user) {
-           throw $this->createNotFoundException(
-               'No user found for email '.$email
-           );
+           $this->get('session')->getFlashBag()->add('error', 'Username not found in database');
+          return $this->redirect('resetpassword');
+          
         }else{
 
           $parameters = array('user' => $user);
@@ -237,11 +271,8 @@ class DefaultController extends Controller {
 
       $parameters = array('user' => $user);
         
-      //var_dump($user);
-      
       return $this->render('FirstUserBundle:Default:updatepassword.html.twig', array('user'=>$user));
-      //return $this->redirect($this->generateUrl('login_login_passwordresetted', array('userid'=>$id)));
-     
+      
     }
 
     public function newpasswordAction(Request $request) {
@@ -268,7 +299,8 @@ class DefaultController extends Controller {
         $session = $this->getRequest()->getSession();
         $session->clear();
         return $this->redirect('login');
-        //return $this->render('FirstUserBundle:Default:login.html.twig');
     }
 
 }
+
+

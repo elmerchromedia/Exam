@@ -9,9 +9,10 @@
 </style>
 <div class="container" >
     <h1>Hello {{user.firstName}} </h1>
-    <p>Welcome to my world </p>
+    <p>Welcome, here is the link of your new account below:<br />
+    http://symfony.localhost/app_dev.php/profile?id={{user.userid}}</p>
     <p>Sincerely Yours,<br />
-    	Elmer P. Malinao
+    	<span>Elmer P. Malinao</span>
     </p>
 </div>
  {%endblock%}
