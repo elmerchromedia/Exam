@@ -8,5 +8,7 @@
     <field name="firstName" type="string" column="first_name" length="30" nullable="false"/>
     <field name="lastName" type="string" column="last_name" length="30" nullable="false"/>
     <field name="password" type="string" column="password" length="90" nullable="false"/>
+    <field name="salt" type="string" column="salt" length="90" nullable="false"/>
+    <field name="isActive" type="boolean" column="isActive" length="10" nullable="false"/>
   </entity>
 </doctrine-mapping>

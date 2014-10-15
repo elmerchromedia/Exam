@@ -33,9 +33,26 @@ class DefaultController extends Controller {
             $session->clear();
             $id = $request->get('userid');
             $username = $request->get('email');
-            $password = sha1($request->get('password'));
+            $password = $request->get('password');
 
-            $user = $repository->findOneBy(array('email' => $username, 'password' => $password));
+
+            #$username->getSalt(uniqid(mt_rand())); // Unique salt for user
+
+            // Set encrypted password
+            $user = $repository->findOneBy(array('email' => $username));
+
+            /*$encoder = $this->get('security.encoder_factory')->getEncoder($user);
+            $hashedPassword = $encoder->encodePassword($password, $user->getSalt());*/
+            //var_dump($user->getPassword());
+            //var_dump($hashedPassword); exit;
+
+            #$password = $request->$encoder('password', $username->getSalt());
+            //var_dump($encoder); exit;
+            //$loginpass->($request->get($password));
+
+            
+
+            
             
                 if (!$user) {
                   $this->get('session')->getFlashBag()->add('error', 'Unknown username or password!..');
@@ -63,7 +80,7 @@ class DefaultController extends Controller {
         }
     }
 
-    public function countIdFirstAction(){
+    /*public function countIdFirstAction(){
         $user = new Users();
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery('SELECT count(i.userid) FROM FirstUserBundle:Users i');
@@ -72,7 +89,7 @@ class DefaultController extends Controller {
 
         return $count;
 
-    }
+    }*/
 
     public function signupAction(Request $request) {
 
@@ -85,7 +102,14 @@ class DefaultController extends Controller {
 
             $user = new Users();
             $user->setFirstName($firstname);
+            $user->setSalt(uniqid(mt_rand())); // Unique salt for user
             $user->setLastName($lastname);
+
+            // Set encrypted password
+            /*$encoder = $this->container->get('security.encoder_factory')
+              ->getEncoder($user);
+            $password = $encoder->encodePassword($password, $user->getSalt());
+            $user->setPassword($password);*/
             $user->setPassword(sha1($password));
             $user->setUsername($username);
             $em = $this->getDoctrine()->getManager();

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 08, 2014 at 07:17 PM
+-- Generation Time: Oct 15, 2014 at 02:13 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -28,18 +28,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `users` (
 `userid` int(11) NOT NULL,
-  `email` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `email` char(30) COLLATE utf8_unicode_ci NOT NULL,
   `first_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(90) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  `password` varchar(90) COLLATE utf8_unicode_ci NOT NULL,
+  `salt` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `isActive` tinyint(1) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userid`, `email`, `first_name`, `last_name`, `password`) VALUES
-(1, 'elmer.malinao@chromedia.com', 'elmer', 'chromedia', '9a15f42d1c524c306eb91c3df1216db248a8f224');
+INSERT INTO `users` (`userid`, `email`, `first_name`, `last_name`, `password`, `salt`, `isActive`) VALUES
+(3, 'elmer.malinao@chromedia.com', '45', '45', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', '217951120543de4e6c4202', 1);
 
 --
 -- Indexes for dumped tables
@@ -59,7 +61,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

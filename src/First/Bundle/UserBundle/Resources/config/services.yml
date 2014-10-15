@@ -2,6 +2,9 @@ parameters:
 #    login_login.example.class: First\Bundle\UserBundle\Example
 
 services:
+#sha256salted_encoder:
+        #class: First\Bundle\UserBundle\Service\Sha256Salted
+
 #    login_login.example:
 #        class: %login_login.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

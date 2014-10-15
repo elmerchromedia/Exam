@@ -2818,6 +2818,14 @@
             <argument>false</argument>
           </argument>
         </argument>
+        <argument key="First\Bundle\UserBundle\Entity\Users" type="collection">
+          <argument key="class">%security.encoder.digest.class%</argument>
+          <argument key="arguments" type="collection">
+            <argument>sha256</argument>
+            <argument>false</argument>
+            <argument>1</argument>
+          </argument>
+        </argument>
       </argument>
     </service>
     <service id="twig.loader" class="Symfony\Bundle\TwigBundle\Loader\FilesystemLoader">
