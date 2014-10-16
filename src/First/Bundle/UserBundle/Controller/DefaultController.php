@@ -13,6 +13,7 @@ use First\Bundle\UserBundle\Modals\Login;
 use Symfony\Component\HttpFoundation\Session\Session; 
 use Symfony\Component\HttpFoundation;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
 
@@ -22,6 +23,7 @@ class DefaultController extends Controller {
             return $this->render('FirstUserBundle:Default:index.html.twig');
     }
     public function loginAction(Request $request) {
+
             return $this->render('FirstUserBundle:Default:login.html.twig');
     }
 
@@ -80,18 +82,51 @@ class DefaultController extends Controller {
         }
     }
 
-    /*public function countIdFirstAction(){
-        $user = new Users();
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT count(i.userid) FROM FirstUserBundle:Users i');
-
-        $count = $query->getResult();
-
-        return $count;
-
-    }*/
-
     public function signupAction(Request $request) {
+        
+        /*$user = new Users();
+        $form = $this->createFormBuilder($user)
+            ->add('email', 'email')
+            ->add('firstname', 'text')
+            ->add('lastname', 'text')
+            ->add('password', 'password')
+            ->add('repassword', 'repassword')
+            ->add('save', 'submit', array('label' => 'Signup'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+          $user->setFirstName('firstname');
+          $user->setLastName('lastname');
+          $user->setPassword('password');
+          $user->setUsername('email');
+
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($user);
+          $em->flush();
+          $parameters = array();
+
+          $parameters = array('user' => $user);
+         
+          $message = \Swift_Message::newInstance()
+                    ->setSubject('Registration Confirmation Message')
+                    ->setFrom('elmer.malinao@chromedia.com')
+                    ->setTo($username = $request->get('email'))
+                    ->setContentType("text/html")
+                    ->setBody(
+                        $this->renderView(
+                            'FirstUserBundle:Registration:email.txt.twig', $parameters)
+                    )
+                ;
+                  $this->get('mailer')->send($message);
+                
+                return $this->redirect($this->generateUrl('user_registration_success'));
+            }
+
+        return array(
+            'signup'   => $form->createView(),
+        );*/
 
         if ($request->getMethod() == 'POST') {
 
@@ -119,23 +154,26 @@ class DefaultController extends Controller {
 
             $parameters = array('user' => $user);
             $message = \Swift_Message::newInstance()
-                ->setSubject('Hello Email')
+                ->setSubject('Registration Email Notification')
                 ->setFrom('elmer.malinao@chromedia.com')
-                ->setTo($username = $request->get('email'))
+                ->setTo($username)
                 ->setContentType("text/html")
                 ->setBody(
                     $this->renderView(
                         'FirstUserBundle:Default:email.txt.twig', $parameters)
-                )
-            ;
+                );
               $this->get('mailer')->send($message);
               $this->get('session')->getFlashBag()->add('success', 'Registered Successfully, Please check on your email address about the mail notification');
               return $this->redirect('signup');
         }
-
-
         return $this->render('FirstUserBundle:Default:signup.html.twig');
-        
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'validation_groups' => array('signup'),
+        ));
     }
 
     public function profileAction(Request $request) {
@@ -194,8 +232,6 @@ class DefaultController extends Controller {
                  'No user found for id '.$id
              );
           }else{
-            
-            
             $user->setFirstName($request->request->get('firstname')); 
             $user->setLastName($request->request->get('lastname')); 
             $em->flush();

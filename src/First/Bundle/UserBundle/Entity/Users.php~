@@ -31,21 +31,20 @@ class Users implements UserInterface
      */
     private $password;
 
+    /**
+     * @var integer
+     */
+    private $userid;
+
      /**
      * @var string
      */
     private $salt;
 
     /**
-     * @var integer
-     */
-    private $userid;
-
-    /**
-     *  @var boolean
+     * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
-
 
     public function __construct()
     {
