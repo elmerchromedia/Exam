@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-
         <link href="{{asset('bundles/firstuser/css/bootstrap.css')}}" rel="stylesheet">
         <link href="{{asset('bundles/firstuser/css/bootstrap-responsive.css')}}" rel="stylesheet">
         <link href="{{asset('bundles/firstuser/css/parsley/parsley.css')}}" rel="stylesheet">
@@ -20,7 +19,7 @@
         .nav{width:71%; height:100%; margin:0 auto; padding:0;}
         .nav ul{margin:0 auto;}
         .nav ul li{list-style:none; display:inline-block; text-align:center;}
-        .nav ul li a{color:#000; font-family:tahoma; font-size:13px;}
+        .nav ul li a{color:#000; font-family:tahoma; font-size:13px; margin:0 0 0 220px;}
         .nav ul li a:hover{color:#fff;}
         .maincontent{margin:10px auto; padding:0;}
         .maincontent h1{font-family:tahoma; font-size:22px; color:#ffb802; font-style:italic; text-align: center;}
@@ -29,14 +28,13 @@
         </head>
         <body>
 {%block container %}
-    <div class="nav">
+<div class="nav">
             <ul>
                 <li><a href="{{path('_welcome')}}">Home</a></li>
                 <li><a href="{{path('login_login_login')}}" target="_blank">Login</a></li>
                 <li><a href="{{path('login_login_signup')}}" target="_blank">Signup</a></li>
             </ul>
     </div>
-   
 <div class="maincontent">
     <h1>welcome to my first symfony 2.5 system with twig templates</h1>
 </div>
