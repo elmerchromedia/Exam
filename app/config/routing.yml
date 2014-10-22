@@ -1,4 +1,4 @@
-login_login:
-    resource: "@FirstUserBundle/Resources/config/routing.yml"
+management_user:
+    resource: "@ManagementUserBundle/Resources/config/routing.yml"
     prefix:   /
 

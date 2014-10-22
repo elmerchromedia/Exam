@@ -27,6 +27,45 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         $context = $this->context;
         $request = $this->request;
 
+        if (0 === strpos($pathinfo, '/js/29278d2')) {
+            // _assetic_29278d2
+            if ($pathinfo === '/js/29278d2.js') {
+                return array (  '_controller' => 'assetic.controller:render',  'name' => '29278d2',  'pos' => NULL,  '_format' => 'js',  '_route' => '_assetic_29278d2',);
+            }
+
+            if (0 === strpos($pathinfo, '/js/29278d2_')) {
+                // _assetic_29278d2_0
+                if ($pathinfo === '/js/29278d2_jquery_1.js') {
+                    return array (  '_controller' => 'assetic.controller:render',  'name' => '29278d2',  'pos' => 0,  '_format' => 'js',  '_route' => '_assetic_29278d2_0',);
+                }
+
+                // _assetic_29278d2_1
+                if ($pathinfo === '/js/29278d2_bootstrap_2.js') {
+                    return array (  '_controller' => 'assetic.controller:render',  'name' => '29278d2',  'pos' => 1,  '_format' => 'js',  '_route' => '_assetic_29278d2_1',);
+                }
+
+                if (0 === strpos($pathinfo, '/js/29278d2_parsley')) {
+                    // _assetic_29278d2_2
+                    if ($pathinfo === '/js/29278d2_parsley.min_3.js') {
+                        return array (  '_controller' => 'assetic.controller:render',  'name' => '29278d2',  'pos' => 2,  '_format' => 'js',  '_route' => '_assetic_29278d2_2',);
+                    }
+
+                    // _assetic_29278d2_3
+                    if ($pathinfo === '/js/29278d2_parsley-standalone.min_4.js') {
+                        return array (  '_controller' => 'assetic.controller:render',  'name' => '29278d2',  'pos' => 3,  '_format' => 'js',  '_route' => '_assetic_29278d2_3',);
+                    }
+
+                    // _assetic_29278d2_4
+                    if ($pathinfo === '/js/29278d2_parsley.extend.min_5.js') {
+                        return array (  '_controller' => 'assetic.controller:render',  'name' => '29278d2',  'pos' => 4,  '_format' => 'js',  '_route' => '_assetic_29278d2_4',);
+                    }
+
+                }
+
+            }
+
+        }
+
         if (0 === strpos($pathinfo, '/_')) {
             // _wdt
             if (0 === strpos($pathinfo, '/_wdt') && preg_match('#^/_wdt/(?P<token>[^/]++)$#s', $pathinfo, $matches)) {
@@ -122,87 +161,85 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // _welcome
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', '_welcome');
-            }
-
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::indexAction',  '_route' => '_welcome',);
-        }
-
-        // login_login_login
+        // login
         if ($pathinfo === '/login') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::loginAction',  '_route' => 'login_login_login',);
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::indexAction',  '_route' => 'login',);
         }
 
-        // login_login_homepage
-        if ($pathinfo === '/dashboard') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::welcomeAction',  '_route' => 'login_login_homepage',);
-        }
-
-        // login_login_signup
+        // signup
         if ($pathinfo === '/signup') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::signupAction',  '_route' => 'login_login_signup',);
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::signupAction',  '_route' => 'signup',);
         }
 
-        // login_login_logout
-        if ($pathinfo === '/logout') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::logoutAction',  '_route' => 'login_login_logout',);
+        // dashboard
+        if ($pathinfo === '/dashboard') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::dashboardAction',  '_route' => 'dashboard',);
         }
 
-        // login_login_editaccount
-        if ($pathinfo === '/editaccount') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::editaccountAction',  '_route' => 'login_login_editaccount',);
+        // checkuser
+        if ($pathinfo === '/checkuser') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\UserController::checkUserAction',  '_route' => 'checkuser',);
         }
 
-        // login_login_saveaccount
-        if ($pathinfo === '/saveaccount') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::saveaccountAction',  '_route' => 'login_login_saveaccount',);
+        // saveuser
+        if ($pathinfo === '/saveuser') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\UserController::saveUserAction',  '_route' => 'saveuser',);
         }
 
-        // login_login_editpassword
-        if ($pathinfo === '/editpassword') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::editpasswordAction',  '_route' => 'login_login_editpassword',);
+        // logout2
+        if ($pathinfo === '/logout2') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\UserController::logoutUserAction',  '_route' => 'logout2',);
         }
 
-        // login_login_savepassword
-        if ($pathinfo === '/savepassword') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::savepasswordAction',  '_route' => 'login_login_savepassword',);
+        // updateuser
+        if ($pathinfo === '/updateuser') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\UserController::updateUserAction',  '_route' => 'updateuser',);
         }
 
-        // login_login_resetpassword
+        // changepass
+        if ($pathinfo === '/changepass') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::changePassAction',  '_route' => 'changepass',);
+        }
+
+        // updatepass
+        if ($pathinfo === '/updatepass') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\UserController::updatePassAction',  '_route' => 'updatepass',);
+        }
+
+        // activate
+        if ($pathinfo === '/activate') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::activateAccountAction',  '_route' => 'activate',);
+        }
+
+        // forgotpass
+        if ($pathinfo === '/forgotpass') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::forgotPassAction',  '_route' => 'forgotpass',);
+        }
+
+        // saveforgotpass
+        if ($pathinfo === '/saveforgotpass') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\UserController::saveUserConfirmationAction',  '_route' => 'saveforgotpass',);
+        }
+
+        // test
+        if ($pathinfo === '/test') {
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::testAction',  '_route' => 'test',);
+        }
+
+        // resetpassword
         if ($pathinfo === '/resetpassword') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::resetpasswordAction',  '_route' => 'login_login_resetpassword',);
+            return array (  '_controller' => 'Management\\UserBundle\\Controller\\DefaultController::resetPassAction',  '_route' => 'resetpassword',);
         }
 
-        // login_login_updatepassword
-        if ($pathinfo === '/updatepassword') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::updatepasswordAction',  '_route' => 'login_login_updatepassword',);
-        }
-
-        // login_login_email_link
-        if ($pathinfo === '/emaillink') {
-            return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::emaillinkAction',  '_route' => 'login_login_email_link',);
-        }
-
-        if (0 === strpos($pathinfo, '/p')) {
-            if (0 === strpos($pathinfo, '/passwordre')) {
-                // login_login_passwordresetted
-                if ($pathinfo === '/passwordresetted') {
-                    return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::newpasswordAction',  '_route' => 'login_login_passwordresetted',);
-                }
-
-                // login_login_passwordreviewed
-                if ($pathinfo === '/passwordreviewed') {
-                    return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::reviewpasswordAction',  '_route' => 'login_login_passwordreviewed',);
-                }
-
+        if (0 === strpos($pathinfo, '/log')) {
+            // login_check
+            if ($pathinfo === '/login_check') {
+                return array('_route' => 'login_check');
             }
 
-            // login_login_profile
-            if ($pathinfo === '/profile') {
-                return array (  '_controller' => 'First\\Bundle\\UserBundle\\Controller\\DefaultController::profileAction',  '_route' => 'login_login_profile',);
+            // logout
+            if ($pathinfo === '/logout') {
+                return array('_route' => 'logout');
             }
 
         }

@@ -136,6 +136,7 @@ class appDevDebugProjectContainer extends Container
             'profiler' => 'getProfilerService',
             'profiler_listener' => 'getProfilerListenerService',
             'property_accessor' => 'getPropertyAccessorService',
+            'pw_encoder' => 'getPwEncoderService',
             'request' => 'getRequestService',
             'request_stack' => 'getRequestStackService',
             'response_listener' => 'getResponseListenerService',
@@ -150,13 +151,11 @@ class appDevDebugProjectContainer extends Container
             'security.csrf.token_manager' => 'getSecurity_Csrf_TokenManagerService',
             'security.encoder_factory' => 'getSecurity_EncoderFactoryService',
             'security.firewall' => 'getSecurity_FirewallService',
-            'security.firewall.map.context.dev' => 'getSecurity_Firewall_Map_Context_DevService',
-            'security.firewall.map.context.login' => 'getSecurity_Firewall_Map_Context_LoginService',
-            'security.firewall.map.context.secured_area' => 'getSecurity_Firewall_Map_Context_SecuredAreaService',
+            'security.firewall.map.context.main' => 'getSecurity_Firewall_Map_Context_MainService',
             'security.rememberme.response_listener' => 'getSecurity_Rememberme_ResponseListenerService',
             'security.role_hierarchy' => 'getSecurity_RoleHierarchyService',
             'security.secure_random' => 'getSecurity_SecureRandomService',
-            'security.user.provider.concrete.in_memory' => 'getSecurity_User_Provider_Concrete_InMemoryService',
+            'security.user.provider.concrete.user_db' => 'getSecurity_User_Provider_Concrete_UserDbService',
             'security.validator.user_password' => 'getSecurity_Validator_UserPasswordService',
             'sensio_distribution.security_checker' => 'getSensioDistribution_SecurityCheckerService',
             'sensio_distribution.security_checker.command' => 'getSensioDistribution_SecurityChecker_CommandService',
@@ -238,6 +237,7 @@ class appDevDebugProjectContainer extends Container
             'twig.loader' => 'getTwig_LoaderService',
             'twig.translation.extractor' => 'getTwig_Translation_ExtractorService',
             'uri_signer' => 'getUriSignerService',
+            'user.userbundle.mapper' => 'getUser_Userbundle_MapperService',
             'validator' => 'getValidatorService',
             'validator.builder' => 'getValidator_BuilderService',
             'validator.email' => 'getValidator_EmailService',
@@ -287,12 +287,9 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAssetic_AssetManagerService()
     {
-        $a = $this->get('templating.loader');
-
         $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), new \Assetic\Cache\ConfigCache('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/cache/dev/assetic/config'), true)));
 
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FirstUserBundle', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/FirstUserBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FirstUserBundle', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/First/Bundle/UserBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($this->get('templating.loader'), '', '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
 
         return $instance;
     }
@@ -638,14 +635,14 @@ class appDevDebugProjectContainer extends Container
         $c = new \Doctrine\Common\Cache\ArrayCache();
         $c->setNamespace('sf2orm_default_b255a4d4fc9230672c461706878e15a03c2951153fecfd98b548a3db25766f58');
 
-        $d = new \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver(array('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/First/Bundle/UserBundle/Resources/config/doctrine' => 'First\\Bundle\\UserBundle\\Entity'));
+        $d = new \Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver(array('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/Management/UserBundle/Resources/config/doctrine' => 'Management\\UserBundle\\Entity'));
         $d->setGlobalBasename('mapping');
 
         $e = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $e->addDriver($d, 'First\\Bundle\\UserBundle\\Entity');
+        $e->addDriver($d, 'Management\\UserBundle\\Entity');
 
         $f = new \Doctrine\ORM\Configuration();
-        $f->setEntityNamespaces(array('FirstUserBundle' => 'First\\Bundle\\UserBundle\\Entity'));
+        $f->setEntityNamespaces(array('ManagementUserBundle' => 'Management\\UserBundle\\Entity'));
         $f->setMetadataCacheImpl($a);
         $f->setQueryCacheImpl($b);
         $f->setResultCacheImpl($c);
@@ -1724,6 +1721,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'pw_encoder' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Management\UserBundle\Service\PasswordHash A Management\UserBundle\Service\PasswordHash instance.
+     */
+    protected function getPwEncoderService()
+    {
+        return $this->services['pw_encoder'] = new \Management\UserBundle\Service\PasswordHash();
+    }
+
+    /**
      * Gets the 'request' service.
      *
      * This service is shared.
@@ -1856,7 +1866,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_EncoderFactoryService()
     {
-        return $this->services['security.encoder_factory'] = new \Symfony\Component\Security\Core\Encoder\EncoderFactory(array('Symfony\\Component\\Security\\Core\\User\\User' => array('class' => 'Symfony\\Component\\Security\\Core\\Encoder\\PlaintextPasswordEncoder', 'arguments' => array(0 => false)), 'First\\Bundle\\UserBundle\\Entity\\Users' => array('class' => 'Symfony\\Component\\Security\\Core\\Encoder\\MessageDigestPasswordEncoder', 'arguments' => array(0 => 'sha256', 1 => false, 2 => 1))));
+        return $this->services['security.encoder_factory'] = new \Symfony\Component\Security\Core\Encoder\EncoderFactory(array('Management\\UserBundle\\Entity\\User' => $this->get('pw_encoder')));
     }
 
     /**
@@ -1869,63 +1879,53 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_FirewallService()
     {
-        return $this->services['security.firewall'] = new \Symfony\Component\Security\Http\Firewall(new \Symfony\Bundle\SecurityBundle\Security\FirewallMap($this, array('security.firewall.map.context.dev' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/(_(profiler|wdt)|css|images|js)/'), 'security.firewall.map.context.login' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/secured/login$'), 'security.firewall.map.context.secured_area' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/secured/'))), $this->get('debug.event_dispatcher'));
+        return $this->services['security.firewall'] = new \Symfony\Component\Security\Http\Firewall(new \Symfony\Bundle\SecurityBundle\Security\FirewallMap($this, array('security.firewall.map.context.main' => new \Symfony\Component\HttpFoundation\RequestMatcher('^/'))), $this->get('debug.event_dispatcher'));
     }
 
     /**
-     * Gets the 'security.firewall.map.context.dev' service.
+     * Gets the 'security.firewall.map.context.main' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
      *
      * @return \Symfony\Bundle\SecurityBundle\Security\FirewallContext A Symfony\Bundle\SecurityBundle\Security\FirewallContext instance.
      */
-    protected function getSecurity_Firewall_Map_Context_DevService()
-    {
-        return $this->services['security.firewall.map.context.dev'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(), NULL);
-    }
-
-    /**
-     * Gets the 'security.firewall.map.context.login' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Symfony\Bundle\SecurityBundle\Security\FirewallContext A Symfony\Bundle\SecurityBundle\Security\FirewallContext instance.
-     */
-    protected function getSecurity_Firewall_Map_Context_LoginService()
-    {
-        return $this->services['security.firewall.map.context.login'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(), NULL);
-    }
-
-    /**
-     * Gets the 'security.firewall.map.context.secured_area' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return \Symfony\Bundle\SecurityBundle\Security\FirewallContext A Symfony\Bundle\SecurityBundle\Security\FirewallContext instance.
-     */
-    protected function getSecurity_Firewall_Map_Context_SecuredAreaService()
+    protected function getSecurity_Firewall_Map_Context_MainService()
     {
         $a = $this->get('monolog.logger.security', ContainerInterface::NULL_ON_INVALID_REFERENCE);
         $b = $this->get('security.context');
-        $c = $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE);
-        $d = $this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE);
-        $e = $this->get('http_kernel');
-        $f = $this->get('security.authentication.manager');
+        $c = $this->get('security.user.provider.concrete.user_db');
+        $d = $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE);
+        $e = $this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE);
+        $f = $this->get('http_kernel');
+        $g = $this->get('security.authentication.manager');
 
-        $g = new \Symfony\Component\Security\Http\AccessMap();
+        $h = new \Symfony\Component\HttpFoundation\RequestMatcher('^/login$');
 
-        $h = new \Symfony\Component\Security\Http\HttpUtils($d, $d);
+        $i = new \Symfony\Component\HttpFoundation\RequestMatcher('^/dashboard');
 
-        $i = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, $h, new \Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler($h, '/'), array('csrf_parameter' => '_csrf_token', 'intention' => 'logout', 'logout_path' => '/secured/logout'));
-        $i->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+        $j = new \Symfony\Component\HttpFoundation\RequestMatcher('^/changepass');
 
-        $j = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler($h, array('login_path' => '/secured/login', 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false));
-        $j->setProviderKey('secured_area');
+        $k = new \Symfony\Component\Security\Http\AccessMap();
+        $k->add($h, array(0 => 'IS_AUTHENTICATED_ANONYMOUSLY'), NULL);
+        $k->add($i, array(0 => 'ROLE_USER'), NULL);
+        $k->add($j, array(0 => 'ROLE_USER'), NULL);
 
-        return $this->services['security.firewall.map.context.secured_area'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($g, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('security.user.provider.concrete.in_memory')), 'secured_area', $a, $c), 2 => $i, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $f, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $h, 'secured_area', $j, new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($e, $h, array('login_path' => '/secured/login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'), $a), array('check_path' => '/secured/login_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $c, NULL), 4 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $g, $f)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $h, 'secured_area', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($e, $h, '/secured/login', false), NULL, NULL, $a));
+        $l = new \Symfony\Component\Security\Http\HttpUtils($e, $e);
+
+        $m = new \Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices(array(0 => $c), 'MiPassphrase', 'main', array('lifetime' => 1800, 'path' => '/.*', 'domain' => NULL, 'name' => 'REMEMBERME', 'secure' => false, 'httponly' => true, 'always_remember_me' => false, 'remember_me_parameter' => '_remember_me'), $a);
+
+        $n = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, $l, new \Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler($l, '/login'), array('csrf_parameter' => '_csrf_token', 'intention' => 'logout', 'logout_path' => '/logout'));
+        $n->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+        $n->addHandler($m);
+
+        $o = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler($l, array('login_path' => '/login', 'default_target_path' => '/dashboard', 'always_use_default_target_path' => false, 'target_path_parameter' => '_target_path', 'use_referer' => false));
+        $o->setProviderKey('main');
+
+        $p = new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $g, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $l, 'main', $o, new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($f, $l, array('login_path' => '/login', 'failure_path' => '/login', 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'), $a), array('check_path' => '/login_check', 'username_parameter' => 'login[email]', 'password_parameter' => 'login[password]', 'use_forward' => false, 'require_previous_session' => true, 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $d, NULL);
+        $p->setRememberMeServices($m);
+
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $c), 'main', $a, $d), 2 => $n, 3 => $p, 4 => new \Symfony\Component\Security\Http\Firewall\RememberMeListener($b, $m, $g, $a, $d), 5 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5447681ac90fb', $a), 6 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $g)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $l, 'main', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($f, $l, '/login', false), NULL, NULL, $a));
     }
 
     /**
@@ -2445,7 +2445,7 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['templating.helper.logout_url'] = $instance = new \Symfony\Bundle\SecurityBundle\Templating\Helper\LogoutUrlHelper($this, $this->get('router'));
 
-        $instance->registerListener('secured_area', '/secured/logout', 'logout', '_csrf_token', NULL);
+        $instance->registerListener('main', '/logout', 'logout', '_csrf_token', NULL);
 
         return $instance;
     }
@@ -2978,7 +2978,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'FirstUserBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
         $instance->addExtension(new \Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension());
         $instance->addGlobal('app', $this->get('templating.globals'));
@@ -3026,11 +3026,10 @@ class appDevDebugProjectContainer extends Container
 
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views', 'Framework');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/symfony/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views', 'Security');
-        $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/TwigBundle/views', 'Twig');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views', 'Twig');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/symfony/swiftmailer-bundle/Symfony/Bundle/SwiftmailerBundle/Resources/views', 'Swiftmailer');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/Resources/views', 'Doctrine');
-        $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/First/Bundle/UserBundle/Resources/views', 'FirstUser');
+        $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/Management/UserBundle/Resources/views', 'ManagementUser');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', 'WebProfiler');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/views', 'SensioDistribution');
         $instance->addPath('/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/Resources/views');
@@ -3062,7 +3061,20 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getUriSignerService()
     {
-        return $this->services['uri_signer'] = new \Symfony\Component\HttpKernel\UriSigner('ThisTokenIsNotSoSecretChangeIt');
+        return $this->services['uri_signer'] = new \Symfony\Component\HttpKernel\UriSigner('52f093685e78cc103d0a354669e009d2fb98d070');
+    }
+
+    /**
+     * Gets the 'user.userbundle.mapper' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Management\UserBundle\Mapper\UserMapper A Management\UserBundle\Mapper\UserMapper instance.
+     */
+    protected function getUser_Userbundle_MapperService()
+    {
+        return $this->services['user.userbundle.mapper'] = new \Management\UserBundle\Mapper\UserMapper($this->get('doctrine.orm.default_entity_manager'));
     }
 
     /**
@@ -3094,7 +3106,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setTranslator($this->get('translator'));
         $instance->setTranslationDomain('validators');
         $instance->addXmlMappings(array(0 => '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/config/validation.xml'));
-        $instance->addYamlMappings(array(0 => '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/First/Bundle/UserBundle/Resources/config/validation.yml'));
+        $instance->addYamlMappings(array(0 => '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/src/Management/UserBundle/Resources/config/validation.yml'));
         $instance->enableAnnotationMapping($this->get('annotation_reader'));
         $instance->addMethodMapping('loadValidatorMetadata');
         $instance->setApiVersion(3);
@@ -3321,7 +3333,9 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.in_memory'), new \Symfony\Component\Security\Core\User\UserChecker(), 'secured_area', $this->get('security.encoder_factory'), true)), true);
+        $a = new \Symfony\Component\Security\Core\User\UserChecker();
+
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('security.user.provider.concrete.user_db'), $a, 'main', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider($a, 'MiPassphrase', 'main'), 2 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5447681ac90fb')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3359,11 +3373,11 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_RoleHierarchyService()
     {
-        return $this->services['security.role_hierarchy'] = new \Symfony\Component\Security\Core\Role\RoleHierarchy(array('ROLE_ADMIN' => array(0 => 'ROLE_USER'), 'ROLE_SUPER_ADMIN' => array(0 => 'ROLE_USER', 1 => 'ROLE_ADMIN', 2 => 'ROLE_ALLOWED_TO_SWITCH')));
+        return $this->services['security.role_hierarchy'] = new \Symfony\Component\Security\Core\Role\RoleHierarchy(array('ROLE_ADMIN' => array(0 => 'ROLE_USER')));
     }
 
     /**
-     * Gets the 'security.user.provider.concrete.in_memory' service.
+     * Gets the 'security.user.provider.concrete.user_db' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
@@ -3372,16 +3386,11 @@ class appDevDebugProjectContainer extends Container
      * If you want to be able to request this service from the container directly,
      * make it public, otherwise you might end up with broken code.
      *
-     * @return \Symfony\Component\Security\Core\User\InMemoryUserProvider A Symfony\Component\Security\Core\User\InMemoryUserProvider instance.
+     * @return \Symfony\Bridge\Doctrine\Security\User\EntityUserProvider A Symfony\Bridge\Doctrine\Security\User\EntityUserProvider instance.
      */
-    protected function getSecurity_User_Provider_Concrete_InMemoryService()
+    protected function getSecurity_User_Provider_Concrete_UserDbService()
     {
-        $this->services['security.user.provider.concrete.in_memory'] = $instance = new \Symfony\Component\Security\Core\User\InMemoryUserProvider();
-
-        $instance->createUser(new \Symfony\Component\Security\Core\User\User('user', 'userpass', array(0 => 'ROLE_USER')));
-        $instance->createUser(new \Symfony\Component\Security\Core\User\User('admin', 'adminpass', array(0 => 'ROLE_ADMIN')));
-
-        return $instance;
+        return $this->services['security.user.provider.concrete.user_db'] = new \Symfony\Bridge\Doctrine\Security\User\EntityUserProvider($this->get('doctrine'), 'Management\\UserBundle\\Entity\\User', 'email', NULL);
     }
 
     /**
@@ -3518,7 +3527,7 @@ class appDevDebugProjectContainer extends Container
                 'AsseticBundle' => 'Symfony\\Bundle\\AsseticBundle\\AsseticBundle',
                 'DoctrineBundle' => 'Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
-                'FirstUserBundle' => 'First\\Bundle\\UserBundle\\FirstUserBundle',
+                'ManagementUserBundle' => 'Management\\UserBundle\\ManagementUserBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
@@ -3536,10 +3545,11 @@ class appDevDebugProjectContainer extends Container
             'mailer_user' => NULL,
             'mailer_password' => NULL,
             'locale' => 'en',
-            'secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'secret' => '52f093685e78cc103d0a354669e009d2fb98d070',
             'debug_toolbar' => true,
             'debug_redirects' => false,
             'use_assetic_controller' => true,
+            'database_path' => NULL,
             'controller_resolver.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver',
             'controller_name_converter.class' => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerNameParser',
             'response_listener.class' => 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener',
@@ -3594,7 +3604,7 @@ class appDevDebugProjectContainer extends Container
             'debug.container.dump' => '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/cache/dev/appDevDebugProjectContainer.xml',
             'debug.controller_resolver.class' => 'Symfony\\Component\\HttpKernel\\Controller\\TraceableControllerResolver',
             'debug.debug_handlers_listener.class' => 'Symfony\\Component\\HttpKernel\\EventListener\\DebugHandlersListener',
-            'kernel.secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'kernel.secret' => '52f093685e78cc103d0a354669e009d2fb98d070',
             'kernel.http_method_override' => true,
             'kernel.trusted_hosts' => array(
 
@@ -3801,11 +3811,6 @@ class appDevDebugProjectContainer extends Container
                 'ROLE_ADMIN' => array(
                     0 => 'ROLE_USER',
                 ),
-                'ROLE_SUPER_ADMIN' => array(
-                    0 => 'ROLE_USER',
-                    1 => 'ROLE_ADMIN',
-                    2 => 'ROLE_ALLOWED_TO_SWITCH',
-                ),
             ),
             'twig.class' => 'Twig_Environment',
             'twig.loader.filesystem.class' => 'Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader',
@@ -3940,7 +3945,7 @@ class appDevDebugProjectContainer extends Container
             ),
             'assetic.cache_dir' => '/Applications/XAMPP/xamppfiles/htdocs/elmer/Symfony/app/cache/dev/assetic',
             'assetic.bundles' => array(
-                0 => 'FirstUserBundle',
+
             ),
             'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
             'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',
